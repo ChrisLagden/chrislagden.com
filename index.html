@@ -355,14 +355,46 @@
     .cert-type { font-size: 13px; color: var(--gray-600); margin-top: 4px; }
 
     /* ── CONTACT ── */
-    #contact .section-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    #contact .section-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
     .contact-heading { font-size: clamp(32px, 4.5vw, 58px); font-weight: 300; letter-spacing: -0.04em; line-height: 1.08; }
     .contact-heading strong { font-weight: 600; }
-    .contact-body { display: flex; flex-direction: column; gap: 16px; }
-    .contact-detail { display: flex; flex-direction: column; gap: 4px; }
-    .contact-detail-label { font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gray-400); }
-    .contact-detail-value { font-size: 15px; font-weight: 500; border-bottom: 1px solid transparent; display: inline; transition: border-color 0.15s; }
-    a:hover .contact-detail-value { border-color: var(--black); }
+    .contact-sub { font-size: 15px; color: var(--gray-600); line-height: 1.65; margin-top: 20px; }
+
+    /* Form */
+    .contact-form { display: flex; flex-direction: column; gap: 14px; }
+
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gray-400); }
+
+    .form-group input,
+    .form-group textarea {
+      font-family: var(--ff); font-size: 15px; color: var(--black);
+      background: var(--white); border: 1px solid var(--gray-200);
+      border-radius: 8px; padding: 12px 16px;
+      width: 100%; outline: none;
+      transition: border-color 0.15s;
+      resize: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: var(--black); }
+    .form-group textarea { min-height: 120px; }
+
+    .form-submit {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      font-family: var(--ff); font-size: 14px; font-weight: 500;
+      padding: 12px 24px; background: var(--black); color: var(--white);
+      border: none; border-radius: 8px; cursor: pointer;
+      transition: opacity 0.15s; width: 100%;
+    }
+    .form-submit:hover { opacity: 0.8; }
+    .form-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .form-status {
+      font-size: 14px; padding: 12px 16px; border-radius: 8px;
+      display: none; align-items: center; gap: 8px;
+    }
+    .form-status.success { display: flex; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+    .form-status.error   { display: flex; background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
 
     /* ── FOOTER ── */
     footer { max-width: var(--max); margin: 0 auto; padding: 28px var(--px); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
@@ -754,18 +786,23 @@
         <h2 class="contact-heading">Let's work<br><strong>together.</strong></h2>
       </div>
       <div class="contact-body">
-        <a href="mailto:chris@chrislagden.com" class="contact-detail">
-          <span class="contact-detail-label">Email</span>
-          <span class="contact-detail-value">chris@chrislagden.com</span>
-        </a>
-        <a href="https://linkedin.com/in/chrislagden" target="_blank" rel="noopener" class="contact-detail">
-          <span class="contact-detail-label">LinkedIn</span>
-          <span class="contact-detail-value">linkedin.com/in/chrislagden</span>
-        </a>
-        <div class="contact-detail">
-          <span class="contact-detail-label">Based in</span>
-          <span class="contact-detail-value">United Kingdom</span>
-        </div>
+        <p class="contact-sub">No spam, no cold calls — just a direct message to my inbox.</p>
+        <form class="contact-form" id="contactForm">
+          <input type="hidden" name="access_key" value="51128f1d-935e-4627-aa3a-700f32a2a2ad">
+          <input type="hidden" name="subject" value="New message from chrislagden.com">
+          <input type="hidden" name="from_name" value="chrislagden.com Contact Form">
+          <div class="form-group">
+            <input type="text" name="name" placeholder="Your name" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <input type="email" name="email" placeholder="Your email" required autocomplete="email">
+          </div>
+          <div class="form-group">
+            <textarea name="message" placeholder="Your message" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send message</button>
+          <div class="form-status" id="formStatus"></div>
+        </form>
       </div>
     </div>
   </section>
@@ -967,6 +1004,42 @@
     certNext.addEventListener('click', () => moveCerts(1));
     moveCerts(0);
     window.addEventListener('resize', () => moveCerts(0));
+
+    /* ── CONTACT FORM (Web3Forms) ── */
+    const contactForm = document.getElementById('contactForm');
+    const formStatus  = document.getElementById('formStatus');
+
+    contactForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const btn = contactForm.querySelector('.form-submit');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      formStatus.className = 'form-status'; // hides via CSS default display:none
+
+      try {
+        const data = new FormData(contactForm);
+        const res  = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: data
+        });
+        const json = await res.json();
+
+        if (json.success) {
+          formStatus.textContent = '✓ Message sent! I\'ll be in touch soon.';
+          formStatus.className = 'form-status success';
+          contactForm.reset();
+        } else {
+          throw new Error(json.message || 'Submission failed');
+        }
+      } catch (err) {
+        formStatus.textContent = '✗ Something went wrong. Please try again or reach out on LinkedIn.';
+        formStatus.className = 'form-status error';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Send message';
+      }
+    });
   </script>
 
 </body>
