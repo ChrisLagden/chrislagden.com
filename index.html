@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chris Lagden — Technical Consultant</title>
+  <meta name="description" content="Chris Lagden is a Technical Consultant specialising in ERP systems, AI implementation, and digital product design." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #000;
+      --white: #fff;
+      --gray-100: #f5f5f5;
+      --gray-200: #e8e8e8;
+      --gray-400: #999;
+      --gray-600: #555;
+      --green: #22c55e;
+      --green-light: #dcfce7;
+      --ff: 'Inter', system-ui, -apple-system, sans-serif;
+      --max: 1080px;
+      --px: clamp(20px, 5vw, 80px);
+    }
+
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--ff); background: var(--white); color: var(--black); line-height: 1.6; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .nav-inner {
+      max-width: var(--max); margin: 0 auto; padding: 0 var(--px);
+      height: 56px; display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 500; font-size: 15px; letter-spacing: -0.01em;
+    }
+
+    .nav-cl-box {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 26px; height: 26px;
+      background: var(--green); border-radius: 5px;
+      font-style: italic; font-weight: 600; font-size: 11px;
+      color: var(--white); letter-spacing: -0.02em; flex-shrink: 0;
+      font-family: var(--ff);
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+    .nav-links a { font-size: 14px; color: var(--gray-600); transition: color 0.15s; }
+    .nav-links a:hover { color: var(--black); }
+
+    .nav-linkedin { display: flex; align-items: center; color: var(--gray-600); transition: color 0.15s; }
+    .nav-linkedin:hover { color: var(--black); }
+
+    .nav-cta {
+      font-size: 13px; font-weight: 500; padding: 7px 16px;
+      border: 1px solid var(--black); border-radius: 6px;
+      color: var(--black) !important; transition: background 0.15s, color 0.15s;
+    }
+    .nav-cta:hover { background: var(--black); color: var(--white) !important; }
+
+    /* ── HERO ── */
+    #hero {
+      padding-top: 56px; min-height: 100svh;
+      display: flex; align-items: center;
+      border-bottom: 1px solid var(--gray-200);
+      overflow: hidden;
+    }
+
+    .hero-inner {
+      max-width: var(--max); margin: 0 auto;
+      padding: clamp(60px, 10vw, 120px) var(--px);
+      width: 100%;
+      display: grid; grid-template-columns: 1fr 420px;
+      gap: 60px; align-items: center;
+    }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 13px; font-weight: 500; color: var(--gray-600);
+      margin-bottom: 32px;
+    }
+    .hero-tag-dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; flex-shrink: 0; }
+
+    .hero-h1 {
+      font-size: clamp(38px, 6vw, 76px); font-weight: 300;
+      letter-spacing: -0.04em; line-height: 1.0;
+      color: var(--black); margin-bottom: 24px;
+    }
+    .hero-h1 strong { font-weight: 600; }
+
+    .hero-sub {
+      font-size: clamp(14px, 1.6vw, 17px); color: var(--gray-600);
+      max-width: 440px; line-height: 1.65; margin-bottom: 44px;
+    }
+
+    .hero-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 14px; font-weight: 500; font-family: var(--ff);
+      padding: 11px 22px; background: var(--black); color: var(--white);
+      border: 1px solid var(--black); border-radius: 8px;
+      cursor: pointer; transition: opacity 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.8; }
+
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 14px; font-weight: 500; font-family: var(--ff);
+      padding: 11px 22px; background: transparent; color: var(--black);
+      border: 1px solid var(--gray-200); border-radius: 8px;
+      cursor: pointer; transition: border-color 0.15s;
+    }
+    .btn-secondary:hover { border-color: var(--black); }
+
+    /* Hero photo */
+    .hero-photo-wrap {
+      position: relative; height: 520px; will-change: transform;
+    }
+
+    .hero-photo {
+      position: absolute; inset: 0;
+      border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--gray-200);
+      will-change: transform;
+    }
+
+    .hero-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      will-change: transform;
+    }
+
+    /* ── SECTIONS ── */
+    section { border-bottom: 1px solid var(--gray-200); }
+
+    .section-inner {
+      max-width: var(--max); margin: 0 auto;
+      padding: clamp(64px, 9vw, 112px) var(--px);
+    }
+
+    .section-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--gray-400); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .section-label svg {
+      width: 14px; height: 14px; flex-shrink: 0;
+      color: var(--green); stroke: var(--green);
+    }
+
+    /* Green underline on bold words in section headings */
+    .about-heading strong,
+    .work-heading strong,
+    .services-heading strong,
+    .tools-heading strong,
+    .certs-heading strong,
+    .contact-heading strong {
+      text-decoration: underline;
+      text-decoration-color: var(--green);
+      text-underline-offset: 5px;
+      text-decoration-thickness: 3px;
+    }
+
+    .hero-h1 strong {
+      text-decoration: underline;
+      text-decoration-color: var(--green);
+      text-underline-offset: 6px;
+      text-decoration-thickness: 4px;
+    }
+
+    /* ── ABOUT ── */
+    #about .section-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: start;
+    }
+
+    .about-heading { font-size: clamp(32px, 4.5vw, 58px); font-weight: 300; letter-spacing: -0.04em; line-height: 1.08; }
+    .about-heading strong { font-weight: 600; }
+    .about-body { padding-top: 4px; }
+    .about-body p { font-size: 15px; color: var(--gray-600); line-height: 1.75; margin-bottom: 16px; }
+    .about-body p:last-child { margin-bottom: 0; }
+
+    .about-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--gray-200);
+      border: 1px solid var(--gray-200); border-radius: 10px;
+      overflow: hidden; margin-top: 48px;
+    }
+    .stat { background: var(--white); padding: 24px 28px; }
+    .stat--full { grid-column: 1 / -1; }
+    .stat-num { font-size: 28px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; margin-bottom: 6px; }
+    .stat-label { font-size: 12px; color: var(--gray-600); line-height: 1.4; }
+
+    /* ── WORK / PROJECTS CAROUSEL ── */
+    #work .section-inner { display: flex; flex-direction: column; }
+
+    .work-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; flex-wrap: wrap; gap: 16px; }
+    .work-heading { font-size: clamp(32px, 4.5vw, 58px); font-weight: 300; letter-spacing: -0.04em; line-height: 1.08; }
+    .work-heading strong { font-weight: 600; }
+
+    .proj-nav { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .proj-counter { font-size: 13px; color: var(--gray-400); font-variant-numeric: tabular-nums; min-width: 36px; text-align: center; }
+
+    .proj-btn {
+      width: 36px; height: 36px; border: 1px solid var(--gray-200);
+      border-radius: 8px; background: var(--white); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.15s, background 0.15s, color 0.15s; color: var(--black);
+    }
+    .proj-btn:hover { border-color: var(--black); background: var(--black); color: var(--white); }
+    .proj-btn:disabled { opacity: 0.3; cursor: default; pointer-events: none; }
+
+    /* Card: text top, image bottom */
+    .proj-carousel { position: relative; overflow: hidden; border-radius: 14px; border: 1px solid var(--gray-200); }
+
+    .proj-track { display: flex; transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+
+    .proj-card { flex: 0 0 100%; display: flex; flex-direction: column; min-width: 0; }
+
+    .proj-info { padding: clamp(28px, 4vw, 48px); border-bottom: 1px solid var(--gray-200); }
+
+    .project-client {
+      font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--gray-400); margin-bottom: 16px;
+    }
+    .project-name {
+      font-size: clamp(20px, 3vw, 32px); font-weight: 600;
+      letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 14px;
+    }
+    .project-desc { font-size: 15px; color: var(--gray-600); line-height: 1.7; margin-bottom: 24px; }
+
+    .project-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 28px; }
+    .tag {
+      font-size: 12px; font-weight: 500; padding: 4px 10px;
+      border: 1px solid var(--gray-200); border-radius: 100px; color: var(--gray-600);
+    }
+
+    .project-link {
+      display: inline-flex; align-items: center; gap: 6px; font-size: 13px;
+      font-weight: 500; border-bottom: 1px solid var(--black); padding-bottom: 1px;
+      transition: opacity 0.15s;
+    }
+    .project-link:hover { opacity: 0.5; }
+
+    .proj-visual {
+      height: 340px; overflow: hidden; position: relative; background: var(--gray-100); flex-shrink: 0;
+    }
+    .proj-visual img {
+      width: 100%; height: 100%; object-fit: cover; object-position: top left;
+      filter: grayscale(100%); transition: filter 0.4s ease;
+    }
+    .proj-card:hover .proj-visual img { filter: grayscale(30%); }
+
+    .proj-visual-placeholder {
+      width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+      background: var(--gray-100);
+    }
+    .proj-visual-placeholder span {
+      font-size: 13px; color: var(--gray-400); font-weight: 500;
+      border: 1px solid var(--gray-200); padding: 8px 16px; border-radius: 100px;
+    }
+
+    /* Timer bar */
+    .proj-timer-wrap { height: 3px; background: var(--gray-200); border-radius: 0 0 14px 14px; overflow: hidden; }
+    .proj-timer-bar {
+      height: 100%; background: var(--green); width: 0%;
+      transform-origin: left; border-radius: 0 0 14px 14px;
+    }
+    .proj-timer-bar.running {
+      transition: width linear;
+    }
+
+    /* ── SERVICES ── */
+    .services-header { margin-bottom: 48px; }
+    .services-heading { font-size: clamp(32px, 4.5vw, 58px); font-weight: 300; letter-spacing: -0.04em; line-height: 1.08; }
+    .services-heading strong { font-weight: 600; }
+
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--gray-200);
+      border: 1px solid var(--gray-200); border-radius: 12px; overflow: hidden;
+    }
+    .svc { background: var(--white); padding: 36px 32px; }
+    .svc-icon { width: 36px; height: 36px; margin-bottom: 20px; color: var(--black); }
+    .svc-title { font-size: 16px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 10px; }
+    .svc-desc { font-size: 14px; color: var(--gray-600); line-height: 1.65; }
+
+    /* ── TOOLS ── */
+    .tools-header { margin-bottom: 48px; }
+    .tools-heading { font-size: clamp(32px, 4.5vw, 58px); font-weight: 300; letter-spacing: -0.04em; line-height: 1.08; }
+    .tools-heading strong { font-weight: 600; }
+
+    .tools-grid {
+      display: grid; grid-template-columns: repeat(6, 1fr);
+      gap: 1px; background: var(--gray-200);
+      border: 1px solid var(--gray-200); border-radius: 12px; overflow: hidden;
+    }
+
+    .tool-item {
+      background: var(--white); padding: 28px 16px;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      text-align: center; transition: background 0.2s, opacity 0.4s;
+    }
+    .tool-item.fading { opacity: 0; }
+    .tool-item:hover { background: var(--gray-100); }
+
+    .tool-logo { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .tool-logo svg { width: 100%; height: 100%; }
+    .tool-name { font-size: 11px; font-weight: 500; color: var(--gray-600); }
+
+    /* ── CERTIFICATIONS ── */
+    .certs-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; flex-wrap: wrap; gap: 16px; }
+    .certs-heading { font-size: clamp(32px, 4.5vw, 58px); font-weight: 300; letter-spacing: -0.04em; line-height: 1.08; }
+    .certs-heading strong { font-weight: 600; }
+    .certs-nav { display: flex; gap: 8px; flex-shrink: 0; }
+    .certs-btn {
+      width: 36px; height: 36px; border: 1px solid var(--gray-200);
+      border-radius: 8px; background: var(--white); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.15s, background 0.15s, color 0.15s; color: var(--black);
+    }
+    .certs-btn:hover { border-color: var(--black); background: var(--black); color: var(--white); }
+
+    .certs-track-wrap { overflow: hidden; }
+    .certs-track { display: flex; gap: 20px; transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+
+    .cert-card {
+      flex: 0 0 calc(25% - 15px);
+      border: 1px solid var(--gray-200); border-radius: 12px;
+      padding: 32px 28px; display: flex; flex-direction: column; gap: 20px; min-width: 0;
+    }
+    .cert-logo-wrap {
+      width: 56px; height: 56px; border: 1px solid var(--gray-200);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; background: var(--white); overflow: hidden; padding: 6px;
+    }
+    .cert-logo-wrap svg { width: 36px; height: 36px; }
+    .cert-logo-wrap img { width: 100%; height: 100%; object-fit: contain; }
+    .cert-issuer { font-size: 11px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 6px; }
+    .cert-title { font-size: 16px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; color: var(--black); }
+    .cert-type { font-size: 13px; color: var(--gray-600); margin-top: 4px; }
+
+    /* ── CONTACT ── */
+    #contact .section-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .contact-heading { font-size: clamp(32px, 4.5vw, 58px); font-weight: 300; letter-spacing: -0.04em; line-height: 1.08; }
+    .contact-heading strong { font-weight: 600; }
+    .contact-body { display: flex; flex-direction: column; gap: 16px; }
+    .contact-detail { display: flex; flex-direction: column; gap: 4px; }
+    .contact-detail-label { font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gray-400); }
+    .contact-detail-value { font-size: 15px; font-weight: 500; border-bottom: 1px solid transparent; display: inline; transition: border-color 0.15s; }
+    a:hover .contact-detail-value { border-color: var(--black); }
+
+    /* ── FOOTER ── */
+    footer { max-width: var(--max); margin: 0 auto; padding: 28px var(--px); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-logo { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; }
+    .footer-copy { font-size: 13px; color: var(--gray-400); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-photo-wrap { height: 340px; }
+      .tools-grid { grid-template-columns: repeat(3, 1fr); }
+      .cert-card { flex: 0 0 calc(50% - 10px); }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      #about .section-inner { grid-template-columns: 1fr; gap: 40px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .tools-grid { grid-template-columns: repeat(2, 1fr); }
+      .cert-card { flex: 0 0 100%; }
+      #contact .section-inner { grid-template-columns: 1fr; gap: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <span class="nav-cl-box"><em>CL</em></span>
+        Chris Lagden
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#services">Services</a></li>
+        <li>
+          <a href="https://linkedin.com/in/chrislagden" target="_blank" rel="noopener" class="nav-linkedin" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </a>
+        </li>
+        <li><a href="#contact" class="nav-cta">Get in touch</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-tag">
+          <span class="hero-tag-dot"></span>
+          Available for new projects
+        </div>
+        <h1 class="hero-h1">
+          Technical consulting<br>
+          <strong>that ships.</strong>
+        </h1>
+        <p class="hero-sub">
+          ERP systems, business &amp; data analysis, AI implementation, and digital product design —
+          I help businesses build better software and streamline their operations.
+        </p>
+        <div class="hero-actions">
+          <a href="#work" class="btn-primary">
+            View my work
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#contact" class="btn-secondary">Get in touch</a>
+        </div>
+      </div>
+
+      <div class="hero-photo-wrap" id="heroPhotoWrap">
+        <div class="hero-photo">
+          <img src="assets/chris.jpeg" alt="Chris Lagden" id="heroImg" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-inner">
+      <div class="about-left">
+        <p class="section-label"><svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="4.5" r="2.5"/><path d="M1.5 12c0-2.485 2.462-4.5 5.5-4.5s5.5 2.015 5.5 4.5"/></svg>About</p>
+        <h2 class="about-heading">
+          Bridging the gap between<br>
+          <strong>business and technology.</strong>
+        </h2>
+        <div class="about-stats">
+          <div class="stat"><div class="stat-num">6+</div><div class="stat-label">Years in technical consulting</div></div>
+          <div class="stat"><div class="stat-num">100K+</div><div class="stat-label">Supported annual sales via ERP</div></div>
+          <div class="stat"><div class="stat-num">4</div><div class="stat-label">Industry leading ecommerce clients</div></div>
+          <div class="stat"><div class="stat-num">Expert</div><div class="stat-label">Computer Science & Masters Degree</div></div>
+          <div class="stat stat--full"><div class="stat-num">Certified BA</div><div class="stat-label">Agile Business Analysis — BCS</div></div>
+        </div>
+      </div>
+      <div class="about-body">
+        <p>I'm Chris — a Technical Consultant based in the UK with over six years of experience working across ERP implementation, AI tooling, data analytics, and product design.</p>
+        <p>My background spans both the technical and strategic sides of digital projects. I've worked with industry-leading clients to deploy complex systems, build data pipelines, and design digital products that people actually use.</p>
+        <p>I hold an MSc in Digital Business and bring a rigorous, systems-level approach to every engagement — whether that's scoping a new ERP rollout or shipping a polished web product from scratch.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="section-inner">
+      <div class="work-header">
+        <div>
+          <p class="section-label"><svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="4" width="11" height="8.5" rx="1.5"/><path d="M4.5 4V3a1.5 1.5 0 0 1 1.5-1.5h2A1.5 1.5 0 0 1 9.5 3v1"/><path d="M1.5 8h11"/></svg>Work</p>
+          <h2 class="work-heading">Selected <strong>projects.</strong></h2>
+        </div>
+        <div class="proj-nav">
+          <button class="proj-btn" id="projPrev" aria-label="Previous project">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <span class="proj-counter" id="projCounter">1 / 4</span>
+          <button class="proj-btn" id="projNext" aria-label="Next project">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="proj-carousel">
+        <div class="proj-track" id="projTrack">
+
+          <!-- Project 1: BOB2 -->
+          <div class="proj-card">
+            <div class="proj-info">
+              <p class="project-client">BOB2 — ERP Platform</p>
+              <h3 class="project-name">Enterprise Resource Planning</h3>
+              <p class="project-desc">End-to-end ERP implementation supporting over £100K in annual sales. Built custom dashboards, automated reporting workflows, and integrated third-party logistics APIs to streamline operations across the business.</p>
+              <div class="project-tags">
+                <span class="tag">ERP</span>
+                <span class="tag">Data Analytics</span>
+                <span class="tag">Automation</span>
+                <span class="tag">Dashboards</span>
+              </div>
+              <span class="project-link">
+                Case study coming soon
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+            <div class="proj-visual">
+              <img src="assets/bob2-1080.png" alt="BOB2 ERP Dashboard" />
+            </div>
+          </div>
+
+          <!-- Project 2: MX5 Parts -->
+          <div class="proj-card">
+            <div class="proj-info">
+              <p class="project-client">MX5 Parts — E-Commerce</p>
+              <h3 class="project-name">MX5 Parts Online Store</h3>
+              <p class="project-desc">Full e-commerce platform build for a specialist MX5 parts retailer. Designed and developed a high-converting storefront with custom product filtering, streamlined checkout, and integrated inventory management to support a growing online customer base.</p>
+              <div class="project-tags">
+                <span class="tag">E-Commerce</span>
+                <span class="tag">Product Design</span>
+                <span class="tag">Web Development</span>
+                <span class="tag">Inventory</span>
+              </div>
+              <span class="project-link">
+                Case study coming soon
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+            <div class="proj-visual">
+              <img src="assets/mx5-1080.png" alt="MX5 Parts Online Store" />
+            </div>
+          </div>
+
+          <!-- Project 3: AI Analytics -->
+          <div class="proj-card">
+            <div class="proj-info">
+              <p class="project-client">Client Project</p>
+              <h3 class="project-name">AI-Powered Analytics Dashboard</h3>
+              <p class="project-desc">Real-time business intelligence platform integrating machine learning models with operational data. Delivers actionable insights across supply chain, sales, and customer behaviour in a single unified view.</p>
+              <div class="project-tags">
+                <span class="tag">AI</span>
+                <span class="tag">Power BI</span>
+                <span class="tag">Python</span>
+                <span class="tag">Azure</span>
+              </div>
+              <span class="project-link">
+                Case study coming soon
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+            <div class="proj-visual">
+              <div class="proj-visual-placeholder">
+                <span>Coming soon</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3: Coming Soon -->
+          <div class="proj-card">
+            <div class="proj-info">
+              <p class="project-client">Client Project</p>
+              <h3 class="project-name">Workflow Automation Platform</h3>
+              <p class="project-desc">End-to-end process automation using n8n, reducing manual workload by over 60% across procurement, invoicing, and customer communications. Fully integrated with existing ERP and CRM systems.</p>
+              <div class="project-tags">
+                <span class="tag">n8n</span>
+                <span class="tag">Automation</span>
+                <span class="tag">Integration</span>
+                <span class="tag">ERP</span>
+              </div>
+              <span class="project-link">
+                Case study coming soon
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+            <div class="proj-visual">
+              <div class="proj-visual-placeholder">
+                <span>Coming soon</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- Progress timer bar -->
+        <div class="proj-timer-wrap">
+          <div class="proj-timer-bar" id="projTimerBar"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-inner">
+      <div class="services-header">
+        <p class="section-label"><svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="1.5" width="4.5" height="4.5" rx="1"/><rect x="8" y="1.5" width="4.5" height="4.5" rx="1"/><rect x="1.5" y="8" width="4.5" height="4.5" rx="1"/><rect x="8" y="8" width="4.5" height="4.5" rx="1"/></svg>Services</p>
+        <h2 class="services-heading">What I <strong>do.</strong></h2>
+      </div>
+      <div class="services-grid">
+
+        <!-- Row 1 -->
+        <div class="svc">
+          <svg class="svc-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="6" width="28" height="20" rx="2"/><path d="M12 32h12M18 26v6"/><path d="M9 14l4 4-4 4M17 18h10"/>
+          </svg>
+          <div class="svc-title">ERP Implementation</div>
+          <div class="svc-desc">Full-cycle ERP deployment from requirements gathering through to go-live. Workflow automation, data migration, and staff training included.</div>
+        </div>
+
+        <div class="svc">
+          <svg class="svc-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 26l8-8 6 6 8-10 6 6"/><path d="M28 10h4v4"/><rect x="2" y="4" width="32" height="28" rx="2"/>
+          </svg>
+          <div class="svc-title">Data & Analytics</div>
+          <div class="svc-desc">Real-time dashboards, SQL pipelines, and AI-powered insights using Power BI and custom tooling. Turn raw data into clear decisions.</div>
+        </div>
+
+        <div class="svc">
+          <svg class="svc-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="4" width="12" height="12" rx="1"/><rect x="20" y="4" width="12" height="12" rx="1"/>
+            <rect x="4" y="20" width="12" height="12" rx="1"/><path d="M20 26h12M26 20v12"/>
+          </svg>
+          <div class="svc-title">Product Design</div>
+          <div class="svc-desc">From Figma prototypes to production. Conversion-focused design and front-end development for web products that perform.</div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="svc">
+          <svg class="svc-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 4L4 12v10l14 8 14-8V12L18 4z"/><path d="M4 12l14 8 14-8"/><path d="M18 20v12"/>
+          </svg>
+          <div class="svc-title">Business Analysis</div>
+          <div class="svc-desc">Requirements gathering, process mapping, and stakeholder management. Turning complex business needs into clear, actionable technical specifications.</div>
+        </div>
+
+        <div class="svc">
+          <svg class="svc-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="18" r="5"/><path d="M18 4v4M18 28v4M4 18h4M28 18h4"/>
+            <path d="M8.5 8.5l2.8 2.8M24.7 24.7l2.8 2.8M8.5 27.5l2.8-2.8M24.7 11.3l2.8-2.8"/>
+          </svg>
+          <div class="svc-title">AI Implementation</div>
+          <div class="svc-desc">Practical AI integration for real business outcomes — from LLM-powered workflows to predictive analytics and intelligent process automation.</div>
+        </div>
+
+        <div class="svc">
+          <svg class="svc-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="10" cy="10" r="4"/><circle cx="26" cy="10" r="4"/><circle cx="10" cy="26" r="4"/>
+            <path d="M14 10h8M10 14v8"/><path d="M22 14l6 8"/>
+          </svg>
+          <div class="svc-title">And more…</div>
+          <div class="svc-desc">Cloud infrastructure, DevOps, API integration, technical training, and strategic technology advisory. Let's talk about your specific challenge.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TOOLS -->
+  <section id="tools">
+    <div class="section-inner">
+      <div class="tools-header">
+        <p class="section-label"><svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 1.5 10 3l-5 5-2.5.5.5-2.5 5-4.5z"/><path d="M9 5l2.5 2.5a1.77 1.77 0 0 1 0 2.5l-.5.5a1.77 1.77 0 0 1-2.5 0L6 8"/></svg>Tools &amp; Tech</p>
+        <h2 class="tools-heading">The stack I <strong>work with.</strong></h2>
+      </div>
+      <div class="tools-grid" id="toolsGrid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certs">
+    <div class="section-inner">
+      <div class="certs-header">
+        <div>
+          <p class="section-label"><svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 1.5 1 4.5l6 3 6-3-6-3z"/><path d="M1 4.5v4"/><path d="M4 6.5v3.5a4.24 4.24 0 0 0 3 1 4.24 4.24 0 0 0 3-1V6.5"/></svg>Education &amp; Certifications</p>
+          <h2 class="certs-heading">Qualifications &amp; <strong>credentials.</strong></h2>
+        </div>
+        <div class="certs-nav">
+          <button class="certs-btn" id="certPrev" aria-label="Previous">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="certs-btn" id="certNext" aria-label="Next">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="certs-track-wrap">
+        <div class="certs-track" id="certsTrack">
+
+          <div class="cert-card">
+            <div class="cert-logo-wrap">
+              <img src="assets/UOL.svg" alt="University of Liverpool" />
+            </div>
+            <div class="cert-info">
+              <div class="cert-issuer">University of Liverpool</div>
+              <div class="cert-title">MSc Digital Business</div>
+              <div class="cert-type">Master of Science</div>
+            </div>
+          </div>
+
+          <div class="cert-card">
+            <div class="cert-logo-wrap">
+              <img src="assets/EH.png" alt="Edge Hill University" />
+            </div>
+            <div class="cert-info">
+              <div class="cert-issuer">Edge Hill University</div>
+              <div class="cert-title">BSc Computer Science</div>
+              <div class="cert-type">Bachelor of Science</div>
+            </div>
+          </div>
+
+          <div class="cert-card">
+            <div class="cert-logo-wrap">
+              <svg viewBox="0 0 36 36" fill="none"><rect x="2" y="2" width="32" height="32" rx="4" stroke="#000" stroke-width="2.5"/><text x="18" y="23" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#000">BCS</text></svg>
+            </div>
+            <div class="cert-info">
+              <div class="cert-issuer">BCS</div>
+              <div class="cert-title">Agile Business Analysis</div>
+              <div class="cert-type">Professional Certification</div>
+            </div>
+          </div>
+
+          <div class="cert-card">
+            <div class="cert-logo-wrap">
+              <svg viewBox="0 0 36 36" fill="none">
+                <rect x="3" y="3" width="13" height="13" rx="1" fill="#000"/>
+                <rect x="20" y="3" width="13" height="13" rx="1" fill="#555"/>
+                <rect x="3" y="20" width="13" height="13" rx="1" fill="#777"/>
+                <rect x="20" y="20" width="13" height="13" rx="1" fill="#333"/>
+              </svg>
+            </div>
+            <div class="cert-info">
+              <div class="cert-issuer">Microsoft Learn</div>
+              <div class="cert-title">AI Business Implementation</div>
+              <div class="cert-type">Microsoft Certification</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-inner">
+      <div>
+        <p class="section-label"><svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="12" height="8.5" rx="1.5"/><path d="m1 4 6 4 6-4"/></svg>Contact</p>
+        <h2 class="contact-heading">Let's work<br><strong>together.</strong></h2>
+      </div>
+      <div class="contact-body">
+        <a href="mailto:chris@chrislagden.com" class="contact-detail">
+          <span class="contact-detail-label">Email</span>
+          <span class="contact-detail-value">chris@chrislagden.com</span>
+        </a>
+        <a href="https://linkedin.com/in/chrislagden" target="_blank" rel="noopener" class="contact-detail">
+          <span class="contact-detail-label">LinkedIn</span>
+          <span class="contact-detail-value">linkedin.com/in/chrislagden</span>
+        </a>
+        <div class="contact-detail">
+          <span class="contact-detail-label">Based in</span>
+          <span class="contact-detail-value">United Kingdom</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">
+      <span class="nav-cl-box"><em>CL</em></span>
+      Chris Lagden
+    </div>
+    <span class="footer-copy">© 2025 Chris Lagden. All rights reserved.</span>
+  </footer>
+
+  <script>
+    /* ── HERO PARALLAX ── */
+    const heroPhotoWrap = document.getElementById('heroPhotoWrap');
+    const heroImg       = document.getElementById('heroImg');
+
+    function onScroll() {
+      const scrollY = window.scrollY;
+      // Photo wrapper moves up at 30% of scroll speed
+      heroPhotoWrap.style.transform = `translateY(${scrollY * 0.22}px)`;
+      // Inner image moves slightly in opposite direction for depth
+      heroImg.style.transform = `translateY(${scrollY * -0.08}px)`;
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    /* ── PROJECTS CAROUSEL ── */
+    const projTrack  = document.getElementById('projTrack');
+    const projPrev   = document.getElementById('projPrev');
+    const projNext   = document.getElementById('projNext');
+    const projCounter = document.getElementById('projCounter');
+    const timerBar   = document.getElementById('projTimerBar');
+
+    let projIdx    = 0;
+    let projTimer  = null;
+    const PROJ_DURATION = 6000; // ms per slide
+
+    function totalProjects() { return projTrack.children.length; }
+
+    function goToProject(idx, restart = true) {
+      projIdx = (idx + totalProjects()) % totalProjects();
+      projTrack.style.transform = `translateX(-${projIdx * 100}%)`;
+      projCounter.textContent   = `${projIdx + 1} / ${totalProjects()}`;
+      projPrev.disabled = false;
+      projNext.disabled = false;
+      if (restart) startTimer();
+    }
+
+    function startTimer() {
+      // Reset bar
+      timerBar.classList.remove('running');
+      timerBar.style.width = '0%';
+      void timerBar.offsetWidth; // force reflow
+
+      // Animate
+      timerBar.classList.add('running');
+      timerBar.style.transitionDuration = PROJ_DURATION + 'ms';
+      timerBar.style.width = '100%';
+
+      clearTimeout(projTimer);
+      projTimer = setTimeout(() => goToProject(projIdx + 1), PROJ_DURATION);
+    }
+
+    projPrev.addEventListener('click', () => goToProject(projIdx - 1));
+    projNext.addEventListener('click', () => goToProject(projIdx + 1));
+
+    // Init
+    goToProject(0);
+
+    /* ── TOOLS RANDOM CYCLING ── */
+    const ALL_TOOLS = [
+      {
+        name: 'n8n',
+        svg: `<svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#000"/><text x="5" y="27" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="white" letter-spacing="-0.5">n8n</text></svg>`
+      },
+      {
+        name: 'Power BI',
+        svg: `<svg viewBox="0 0 40 40" fill="none"><rect x="6" y="22" width="6" height="12" rx="1" fill="#000"/><rect x="17" y="14" width="6" height="20" rx="1" fill="#000"/><rect x="28" y="8" width="6" height="26" rx="1" fill="#000"/></svg>`
+      },
+      {
+        name: 'Metabase',
+        svg: `<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="15" stroke="#000" stroke-width="2"/><circle cx="20" cy="20" r="5" fill="#000"/><circle cx="20" cy="6" r="3" fill="#000"/><circle cx="20" cy="34" r="3" fill="#000"/><circle cx="6" cy="20" r="3" fill="#000"/><circle cx="34" cy="20" r="3" fill="#000"/></svg>`
+      },
+      {
+        name: 'SQL',
+        svg: `<svg viewBox="0 0 40 40" fill="none"><ellipse cx="20" cy="13" rx="13" ry="5" stroke="#000" stroke-width="2"/><path d="M7 13v7c0 2.76 5.82 5 13 5s13-2.24 13-5v-7" stroke="#000" stroke-width="2"/><path d="M7 20v7c0 2.76 5.82 5 13 5s13-2.24 13-5v-7" stroke="#000" stroke-width="2"/></svg>`
+      },
+      {
+        name: 'Python',
+        svg: `<svg viewBox="0 0 40 40" fill="none"><path d="M20 5c-6 0-9 2.5-9 6v3h9v1H9c-3.5 0-6 2-6 6s2 6.5 5.5 6.5L10 28v2c0 3.5 3 6 10 6s10-2.5 10-6v-3H20v-1h12c3.5 0 6-2 6-6s-2.5-6-5.5-6.5L30 13v-2c0-3.5-4-6-10-6zm-2 3.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm4 20a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="#000"/></svg>`
+      },
+      {
+        name: 'Figma',
+        svg: `<svg viewBox="0 0 40 40" fill="none"><rect x="11" y="5" width="9" height="9" rx="4.5" fill="#000"/><rect x="20" y="5" width="9" height="9" rx="4.5" fill="#555"/><rect x="11" y="15.5" width="9" height="9" rx="2" fill="#777"/><circle cx="24.5" cy="20" r="4.5" fill="#333"/><rect x="11" y="26" width="9" height="9" rx="4.5" fill="#000"/></svg>`
+      },
+      {
+        name: 'Claude',
+        svg: `<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="17" stroke="#000" stroke-width="2"/><path d="M14 26c1.5-4 3-7 6-10M20 16c3 3 4.5 6 6 10" stroke="#000" stroke-width="2.5" stroke-linecap="round"/><path d="M12 22h16" stroke="#000" stroke-width="2" stroke-linecap="round"/></svg>`
+      },
+      {
+        name: 'Ollama',
+        svg: `<svg viewBox="0 0 40 40" fill="none"><ellipse cx="20" cy="28" rx="10" ry="6" stroke="#000" stroke-width="2"/><circle cx="15" cy="18" r="5" fill="#000"/><circle cx="25" cy="18" r="5" fill="#000"/><path d="M15 13c0-5 10-5 10 0" stroke="#000" stroke-width="2"/><circle cx="13" cy="18" r="1.5" fill="white"/><circle cx="23" cy="18" r="1.5" fill="white"/></svg>`
+      },
+      {
+        name: 'Azure',
+        svg: `<svg viewBox="0 0 40 40" fill="none"><path d="M8 32h16l-8-14L8 32z" fill="#000"/><path d="M16 8l10 18H8" stroke="#000" stroke-width="0" fill="none"/><path d="M22 8l10 24H18" fill="#555"/></svg>`
+      },
+      {
+        name: 'GitHub',
+        svg: `<svg viewBox="0 0 40 40" fill="currentColor"><path d="M20 4C11.16 4 4 11.16 4 20c0 7.08 4.59 13.08 10.94 15.21.8.15 1.09-.35 1.09-.77 0-.38-.01-1.38-.02-2.71-4.45.97-5.39-2.14-5.39-2.14-.73-1.85-1.78-2.34-1.78-2.34-1.45-.99.11-.97.11-.97 1.61.11 2.45 1.65 2.45 1.65 1.43 2.45 3.74 1.74 4.65 1.33.15-1.04.56-1.74 1.02-2.14-3.55-.4-7.28-1.78-7.28-7.91 0-1.75.62-3.18 1.65-4.3-.17-.4-.72-2.03.15-4.24 0 0 1.34-.43 4.4 1.64A15.3 15.3 0 0 1 20 11.5c1.36.01 2.73.18 4.01.54 3.05-2.07 4.39-1.64 4.39-1.64.87 2.21.32 3.84.16 4.24 1.03 1.12 1.64 2.55 1.64 4.3 0 6.15-3.74 7.5-7.3 7.9.57.49 1.08 1.47 1.08 2.96 0 2.14-.02 3.86-.02 4.38 0 .43.29.93 1.1.77C31.42 33.07 36 27.08 36 20 36 11.16 28.84 4 20 4z"/></svg>`
+      },
+      {
+        name: 'Docker',
+        svg: `<svg viewBox="0 0 40 40" fill="none"><rect x="5" y="17" width="6" height="5" rx="1" stroke="#000" stroke-width="1.5"/><rect x="12" y="17" width="6" height="5" rx="1" stroke="#000" stroke-width="1.5"/><rect x="19" y="17" width="6" height="5" rx="1" stroke="#000" stroke-width="1.5"/><rect x="12" y="11" width="6" height="5" rx="1" stroke="#000" stroke-width="1.5"/><rect x="19" y="11" width="6" height="5" rx="1" stroke="#000" stroke-width="1.5"/><path d="M5 22c1 4 4 6 9 6h8c5 0 9-3 9-8 0 0-2-1-5-1" stroke="#000" stroke-width="1.5" stroke-linecap="round"/><path d="M30 20s1-3 4-2" stroke="#000" stroke-width="1.5" stroke-linecap="round"/></svg>`
+      },
+      {
+        name: 'DevOps',
+        svg: `<svg viewBox="0 0 40 40" fill="none"><path d="M10 20a10 10 0 0 1 10-10c4 0 7.5 2 9.5 5" stroke="#000" stroke-width="2" stroke-linecap="round"/><path d="M30 20a10 10 0 0 1-10 10c-4 0-7.5-2-9.5-5" stroke="#000" stroke-width="2" stroke-linecap="round"/><path d="M28 11l2 4 4-2M12 29l-2-4-4 2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+      }
+    ];
+
+    const GRID_SIZE = 6;
+    const toolsGrid = document.getElementById('toolsGrid');
+    let displayedIndices = [];
+
+    function getRandomPool(exclude, count) {
+      const available = ALL_TOOLS.map((_, i) => i).filter(i => !exclude.includes(i));
+      const shuffled  = available.sort(() => Math.random() - 0.5);
+      return shuffled.slice(0, count);
+    }
+
+    function renderTool(idx) {
+      const t = ALL_TOOLS[idx];
+      return `<div class="tool-item">
+        <div class="tool-logo">${t.svg}</div>
+        <span class="tool-name">${t.name}</span>
+      </div>`;
+    }
+
+    function initTools() {
+      displayedIndices = getRandomPool([], GRID_SIZE);
+      toolsGrid.innerHTML = displayedIndices.map(i => renderTool(i)).join('');
+    }
+
+    function cycleOneTool() {
+      const cells = toolsGrid.querySelectorAll('.tool-item');
+      if (!cells.length) return;
+
+      // Pick a random cell to swap
+      const cellIdx    = Math.floor(Math.random() * GRID_SIZE);
+      const cell       = cells[cellIdx];
+      const newToolIdx = getRandomPool(displayedIndices, 1)[0];
+      if (newToolIdx === undefined) return;
+
+      cell.classList.add('fading');
+      setTimeout(() => {
+        displayedIndices[cellIdx] = newToolIdx;
+        cell.outerHTML = renderTool(newToolIdx);
+        // Re-query since we replaced outerHTML
+        const newCell = toolsGrid.querySelectorAll('.tool-item')[cellIdx];
+        if (newCell) {
+          newCell.style.opacity = '0';
+          void newCell.offsetWidth;
+          newCell.style.transition = 'opacity 0.4s';
+          newCell.style.opacity    = '1';
+        }
+      }, 400);
+    }
+
+    initTools();
+    setInterval(cycleOneTool, 2200);
+
+    /* ── CERTS CAROUSEL ── */
+    const certsTrack = document.getElementById('certsTrack');
+    const certPrev   = document.getElementById('certPrev');
+    const certNext   = document.getElementById('certNext');
+    let   certIdx    = 0;
+
+    function getVisible() {
+      const w = certsTrack.parentElement.offsetWidth;
+      if (w < 600) return 1;
+      if (w < 900) return 2;
+      return 4;
+    }
+
+    function moveCerts(dir) {
+      const visible = getVisible();
+      const max     = Math.max(0, certsTrack.children.length - visible);
+      certIdx       = Math.min(Math.max(certIdx + dir, 0), max);
+      const cardW   = certsTrack.children[0].offsetWidth + 20;
+      certsTrack.style.transform = `translateX(-${certIdx * cardW}px)`;
+      certPrev.disabled = certIdx === 0;
+      certNext.disabled = certIdx >= max;
+    }
+
+    certPrev.addEventListener('click', () => moveCerts(-1));
+    certNext.addEventListener('click', () => moveCerts(1));
+    moveCerts(0);
+    window.addEventListener('resize', () => moveCerts(0));
+  </script>
+
+</body>
+</html>
