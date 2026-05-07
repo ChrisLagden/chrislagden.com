@@ -57,12 +57,15 @@
       font-family: var(--ff);
     }
 
-    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
-    .nav-links a { font-size: 14px; color: var(--gray-600); transition: color 0.15s; }
-    .nav-links a:hover { color: var(--black); }
+    .nav-logo em { font-style: italic; }
+    .nav-dot-com { font-size: 11px; color: var(--gray-400); font-weight: 400; letter-spacing: 0; margin-left: 1px; }
 
-    .nav-linkedin { display: flex; align-items: center; color: var(--gray-600); transition: color 0.15s; }
-    .nav-linkedin:hover { color: var(--black); }
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+    .nav-links a { font-size: 14px; color: var(--gray-600); transition: color 0.15s, text-decoration-color 0.2s; text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 3px; text-decoration-thickness: 2px; }
+    .nav-links a:not(.nav-cta):not(.nav-linkedin):hover { color: var(--black); text-decoration-color: var(--green); }
+
+    .nav-linkedin { display: flex; align-items: center; color: var(--gray-600); transition: color 0.2s; }
+    .nav-linkedin:hover { color: #0077b5; }
 
     .nav-cta {
       font-size: 13px; font-weight: 500; padding: 7px 16px;
@@ -162,7 +165,7 @@
       color: var(--green); stroke: var(--green);
     }
 
-    /* Green underline on bold words in section headings */
+    /* Green underline on bold words in section headings — animates in on scroll */
     .about-heading strong,
     .work-heading strong,
     .services-heading strong,
@@ -170,17 +173,29 @@
     .certs-heading strong,
     .contact-heading strong {
       text-decoration: underline;
-      text-decoration-color: var(--green);
+      text-decoration-color: transparent;
       text-underline-offset: 5px;
       text-decoration-thickness: 3px;
+      transition: text-decoration-color 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    section.in-view .about-heading strong,
+    section.in-view .work-heading strong,
+    section.in-view .services-heading strong,
+    section.in-view .tools-heading strong,
+    section.in-view .certs-heading strong,
+    section.in-view .contact-heading strong {
+      text-decoration-color: var(--green);
     }
 
     .hero-h1 strong {
       text-decoration: underline;
-      text-decoration-color: var(--green);
+      text-decoration-color: transparent;
       text-underline-offset: 6px;
       text-decoration-thickness: 4px;
+      transition: text-decoration-color 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
     }
+    #hero.in-view .hero-h1 strong { text-decoration-color: var(--green); }
 
     /* ── ABOUT ── */
     #about .section-inner {
@@ -193,6 +208,20 @@
     .about-body { padding-top: 4px; }
     .about-body p { font-size: 15px; color: var(--gray-600); line-height: 1.75; margin-bottom: 16px; }
     .about-body p:last-child { margin-bottom: 0; }
+
+    @keyframes toolGreenFlash {
+      0%   { background: var(--green-light); }
+      100% { background: var(--white); }
+    }
+    .tool-flash { animation: toolGreenFlash 0.8s ease forwards; }
+
+    .about-anim-wrap {
+      margin-top: 36px; border-radius: 12px;
+      background: var(--gray-100);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px; min-height: 180px;
+    }
+    #ideaCanvas { display: block; max-width: 100%; height: auto; }
 
     .about-stats {
       display: grid; grid-template-columns: 1fr 1fr;
@@ -428,7 +457,7 @@
     <div class="nav-inner">
       <a href="#" class="nav-logo">
         <span class="nav-cl-box"><em>CL</em></span>
-        Chris Lagden
+        <em>Chris</em> Lagden<span class="nav-dot-com">.com</span>
       </a>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
@@ -500,6 +529,9 @@
         <p>I'm Chris — a Technical Consultant based in the UK with over six years of experience working across ERP implementation, AI tooling, data analytics, and product design.</p>
         <p>My background spans both the technical and strategic sides of digital projects. I've worked with industry-leading clients to deploy complex systems, build data pipelines, and design digital products that people actually use.</p>
         <p>I hold an MSc in Digital Business and bring a rigorous, systems-level approach to every engagement — whether that's scoping a new ERP rollout or shipping a polished web product from scratch.</p>
+        <div class="about-anim-wrap">
+          <canvas id="ideaCanvas"></canvas>
+        </div>
       </div>
     </div>
   </section>
@@ -820,7 +852,7 @@
         <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
         LinkedIn
       </a>
-      <span class="footer-copy">© 2025 Chris Lagden. All rights reserved.</span>
+      <span class="footer-copy">© 2026 Chris Lagden. All rights reserved.</span>
     </div>
   </footer>
 
@@ -910,15 +942,15 @@
       },
       {
         name: 'Claude',
-        svg: `<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="17" stroke="#000" stroke-width="2"/><path d="M14 26c1.5-4 3-7 6-10M20 16c3 3 4.5 6 6 10" stroke="#000" stroke-width="2.5" stroke-linecap="round"/><path d="M12 22h16" stroke="#000" stroke-width="2" stroke-linecap="round"/></svg>`
+        svg: `<svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#CC785C"/><path d="M13 28 L18.5 12 L20 16.5 L21.5 12 L27 28" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M15 23 H25" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>`
       },
       {
         name: 'Ollama',
-        svg: `<svg viewBox="0 0 40 40" fill="none"><ellipse cx="20" cy="28" rx="10" ry="6" stroke="#000" stroke-width="2"/><circle cx="15" cy="18" r="5" fill="#000"/><circle cx="25" cy="18" r="5" fill="#000"/><path d="M15 13c0-5 10-5 10 0" stroke="#000" stroke-width="2"/><circle cx="13" cy="18" r="1.5" fill="white"/><circle cx="23" cy="18" r="1.5" fill="white"/></svg>`
+        svg: `<svg viewBox="0 0 40 40" fill="none"><circle cx="15" cy="18" r="7" fill="#000"/><circle cx="25" cy="18" r="7" fill="#000"/><circle cx="13" cy="17" r="2.5" fill="white"/><circle cx="23" cy="17" r="2.5" fill="white"/><path d="M12 25 C12 32 28 32 28 25" fill="#000"/><circle cx="20" cy="10" r="3" fill="#000"/><path d="M20 13 L20 18" stroke="#000" stroke-width="2"/></svg>`
       },
       {
         name: 'Azure',
-        svg: `<svg viewBox="0 0 40 40" fill="none"><path d="M8 32h16l-8-14L8 32z" fill="#000"/><path d="M16 8l10 18H8" stroke="#000" stroke-width="0" fill="none"/><path d="M22 8l10 24H18" fill="#555"/></svg>`
+        svg: `<svg viewBox="0 0 40 40" fill="none"><path d="M8 32h16l-8-14L8 32z" fill="#000"/><path d="M22 8l10 24H18" fill="#555"/></svg>`
       },
       {
         name: 'GitHub',
@@ -926,11 +958,23 @@
       },
       {
         name: 'Docker',
-        svg: `<svg viewBox="0 0 40 40" fill="none"><rect x="5" y="17" width="6" height="5" rx="1" stroke="#000" stroke-width="1.5"/><rect x="12" y="17" width="6" height="5" rx="1" stroke="#000" stroke-width="1.5"/><rect x="19" y="17" width="6" height="5" rx="1" stroke="#000" stroke-width="1.5"/><rect x="12" y="11" width="6" height="5" rx="1" stroke="#000" stroke-width="1.5"/><rect x="19" y="11" width="6" height="5" rx="1" stroke="#000" stroke-width="1.5"/><path d="M5 22c1 4 4 6 9 6h8c5 0 9-3 9-8 0 0-2-1-5-1" stroke="#000" stroke-width="1.5" stroke-linecap="round"/><path d="M30 20s1-3 4-2" stroke="#000" stroke-width="1.5" stroke-linecap="round"/></svg>`
+        svg: `<svg viewBox="0 0 40 40" fill="none"><rect x="4" y="14" width="7" height="6" rx="1" stroke="#000" stroke-width="1.5"/><rect x="12" y="14" width="7" height="6" rx="1" stroke="#000" stroke-width="1.5"/><rect x="20" y="14" width="7" height="6" rx="1" stroke="#000" stroke-width="1.5"/><rect x="12" y="7" width="7" height="6" rx="1" stroke="#000" stroke-width="1.5"/><rect x="20" y="7" width="7" height="6" rx="1" stroke="#000" stroke-width="1.5"/><path d="M4 20 C5 28 11 32 20 31 C28 30 34 26 34 20" stroke="#000" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M30 14 C32 14 34 16 34 18" stroke="#000" stroke-width="1.5" stroke-linecap="round"/><circle cx="32" cy="12" r="2" fill="#000"/></svg>`
       },
       {
         name: 'DevOps',
-        svg: `<svg viewBox="0 0 40 40" fill="none"><path d="M10 20a10 10 0 0 1 10-10c4 0 7.5 2 9.5 5" stroke="#000" stroke-width="2" stroke-linecap="round"/><path d="M30 20a10 10 0 0 1-10 10c-4 0-7.5-2-9.5-5" stroke="#000" stroke-width="2" stroke-linecap="round"/><path d="M28 11l2 4 4-2M12 29l-2-4-4 2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+        svg: `<svg viewBox="0 0 40 40" fill="none"><path d="M8 19 C8 12 14 7 21 9 L25 11" stroke="#000" stroke-width="2" stroke-linecap="round"/><path d="M32 21 C32 28 26 33 19 31 L15 29" stroke="#000" stroke-width="2" stroke-linecap="round"/><path d="M21 6 L25 11 L19 13" fill="#000"/><path d="M19 34 L15 29 L21 27" fill="#000"/></svg>`
+      },
+      {
+        name: 'Notion',
+        svg: `<svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#000"/><path d="M12 10 L12 30 M12 10 L26 30 M26 10 L26 30" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+      },
+      {
+        name: 'AWS',
+        svg: `<svg viewBox="0 0 40 40" fill="none"><text x="6" y="21" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#000">AWS</text><path d="M6 30 C12 37 28 37 34 30" stroke="#000" stroke-width="2.5" stroke-linecap="round" fill="none"/><path d="M31 28 L35 31 L31 34" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+      },
+      {
+        name: 'Google SEO',
+        svg: `<svg viewBox="0 0 40 40" fill="none"><circle cx="17" cy="16" r="11" stroke="#000" stroke-width="2"/><path d="M25 24 L35 34" stroke="#000" stroke-width="2.5" stroke-linecap="round"/><path d="M11 20 L15 16 L19 19 L23 13" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`
       }
     ];
 
@@ -978,6 +1022,9 @@
           void newCell.offsetWidth;
           newCell.style.transition = 'opacity 0.4s';
           newCell.style.opacity    = '1';
+          // Green flash
+          newCell.classList.add('tool-flash');
+          setTimeout(() => newCell.classList.remove('tool-flash'), 800);
         }
       }, 400);
     }
@@ -1048,6 +1095,175 @@
         btn.textContent = 'Send message';
       }
     });
+
+    /* ── SCROLL UNDERLINE ANIMATION ── */
+    const ioSections = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('section').forEach(s => ioSections.observe(s));
+
+    /* ── ABOUT: IDEA → PRODUCT CANVAS ANIMATION ── */
+    (function () {
+      const canvas = document.getElementById('ideaCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const W = 360, H = 230;
+      canvas.width = W; canvas.height = H;
+      const CX = W / 2, CY = H / 2;
+      const GREEN = '#22c55e', GREEN_LIGHT = '#dcfce7';
+
+      // Pre-computed so they don't change per frame
+      const LINE_WIDTHS = [0.88, 0.65, 0.75, 0.55];
+      const PARTICLES = Array.from({ length: 14 }, (_, i) => ({
+        angle: (i / 14) * Math.PI * 2 + (i % 3) * 0.2,
+        r: 3 + (i % 4),
+        maxDist: 52 + (i % 5) * 12
+      }));
+
+      function rr(x, y, w, h, r) { // roundRect helper
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.lineTo(x + w - r, y); ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+        ctx.lineTo(x + w, y + h - r); ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+        ctx.lineTo(x + r, y + h); ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+        ctx.lineTo(x, y + r); ctx.quadraticCurveTo(x, y, x + r, y);
+        ctx.closePath();
+      }
+
+      function easeOut(t)   { return 1 - Math.pow(1 - t, 2); }
+      function easeInOut(t) { return t < .5 ? 2*t*t : -1+(4-2*t)*t; }
+      function clamp01(v, a, b) { return Math.max(0, Math.min(1, (v - a) / (b - a))); }
+
+      // Phase timings (ms)
+      const PH = { bulbEnd: 1400, cardStart: 1200, cardEnd: 3000, fillStart: 2700, fillEnd: 3900, partStart: 3700, partEnd: 5100, fadeStart: 4900, total: 5400 };
+
+      function drawBulb(p) {
+        ctx.save();
+        ctx.strokeStyle = '#000'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.setLineDash([5, 5]);
+        ctx.beginPath();
+        ctx.arc(CX, CY - 10, 36, Math.PI * 0.45, Math.PI * 0.45 + Math.PI * 1.7 * p);
+        ctx.stroke();
+        if (p > 0.7) {
+          const bp = (p - 0.7) / 0.3;
+          ctx.setLineDash([]);
+          ctx.beginPath();
+          ctx.moveTo(CX - 13, CY + 27); ctx.lineTo(CX - 13, CY + 27 + 10 * bp);
+          ctx.moveTo(CX + 13, CY + 27); ctx.lineTo(CX + 13, CY + 27 + 10 * bp);
+          ctx.stroke();
+          if (bp > 0.5) {
+            ctx.beginPath();
+            ctx.moveTo(CX - 11, CY + 37); ctx.lineTo(CX - 11 + 22 * Math.min(1, (bp - 0.5) / 0.5), CY + 37);
+            ctx.stroke();
+          }
+        }
+        ctx.restore();
+      }
+
+      function drawCard(drawP, fillA) {
+        const cw = 200, ch = 150, cx0 = CX - 100, cy0 = CY - 82;
+        ctx.save();
+        // Shadow
+        if (fillA > 0) { ctx.shadowColor = `rgba(0,0,0,${fillA * 0.14})`; ctx.shadowBlur = 18 * fillA; ctx.shadowOffsetY = 5 * fillA; }
+        // Fill
+        if (fillA > 0) { ctx.fillStyle = '#fff'; ctx.globalAlpha = fillA; rr(cx0, cy0, cw, ch, 10); ctx.fill(); ctx.globalAlpha = 1; }
+        ctx.shadowColor = 'transparent'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+        // Border
+        ctx.strokeStyle = fillA > 0.5 ? `rgba(0,0,0,0.08)` : '#000'; ctx.lineWidth = 1.5; ctx.setLineDash([]);
+        if (drawP >= 1) { rr(cx0, cy0, cw, ch, 10); ctx.stroke(); }
+        else {
+          const perim = 2 * (cw + ch), drawn = perim * drawP;
+          ctx.beginPath();
+          if (drawn > 0)  { ctx.moveTo(cx0 + 10, cy0); ctx.lineTo(cx0 + Math.min(drawn, cw - 10), cy0); ctx.stroke(); }
+          if (drawn > cw) { ctx.beginPath(); ctx.moveTo(cx0 + cw, cy0 + 10); ctx.lineTo(cx0 + cw, cy0 + Math.min(drawn - cw, ch - 10)); ctx.stroke(); }
+          if (drawn > cw + ch) { ctx.beginPath(); ctx.moveTo(cx0 + cw - 10, cy0 + ch); ctx.lineTo(cx0 + cw - Math.min(drawn - cw - ch, cw - 10), cy0 + ch); ctx.stroke(); }
+          if (drawn > 2 * cw + ch) { ctx.beginPath(); ctx.moveTo(cx0, cy0 + ch - 10); ctx.lineTo(cx0, cy0 + ch - Math.min(drawn - 2 * cw - ch, ch - 10)); ctx.stroke(); }
+        }
+        // UI elements
+        if (drawP > 0.3) {
+          const ua = Math.min(1, (drawP - 0.3) / 0.4) * (0.25 + fillA * 0.75);
+          // Header bg
+          if (fillA > 0) { ctx.globalAlpha = fillA * 0.05; ctx.fillStyle = '#000'; rr(cx0 + 10, cy0 + 10, cw - 20, 28, 5); ctx.fill(); ctx.globalAlpha = 1; }
+          // Green brand dot
+          ctx.globalAlpha = ua; ctx.fillStyle = GREEN;
+          ctx.beginPath(); ctx.arc(cx0 + 24, cy0 + 24, 7, 0, Math.PI * 2); ctx.fill();
+          // Title lines
+          ctx.fillStyle = '#000'; ctx.globalAlpha = ua * 0.7; rr(cx0 + 40, cy0 + 18, 68, 6, 3); ctx.fill();
+          ctx.globalAlpha = ua * 0.4; rr(cx0 + 40, cy0 + 28, 44, 4, 2); ctx.fill();
+          ctx.globalAlpha = 1;
+        }
+        if (drawP > 0.6) {
+          const ca = Math.min(1, (drawP - 0.6) / 0.4) * (0.15 + fillA * 0.65);
+          ctx.globalAlpha = ca * 0.55; ctx.fillStyle = '#000';
+          LINE_WIDTHS.forEach((w, i) => { rr(cx0 + 16, cy0 + 50 + i * 14, (cw - 32) * w, 5, 2.5); ctx.fill(); });
+          // Button
+          if (fillA > 0.25) {
+            ctx.globalAlpha = fillA; ctx.fillStyle = GREEN;
+            rr(cx0 + cw / 2 - 36, cy0 + ch - 34, 72, 22, 7); ctx.fill();
+            if (fillA > 0.65) {
+              ctx.globalAlpha = fillA; ctx.fillStyle = '#fff';
+              ctx.font = `600 11px Inter, sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+              ctx.fillText('Launch ✓', CX, cy0 + ch - 23);
+            }
+          }
+          ctx.globalAlpha = 1;
+        }
+        ctx.restore();
+      }
+
+      function drawParticles(p) {
+        PARTICLES.forEach(pt => {
+          const dist = p * pt.maxDist;
+          const x = CX + Math.cos(pt.angle) * dist;
+          const y = CY + Math.sin(pt.angle) * dist - 5;
+          const fade = p < 0.35 ? p / 0.35 : 1 - (p - 0.35) / 0.65;
+          ctx.save(); ctx.globalAlpha = fade * 0.88; ctx.fillStyle = GREEN;
+          ctx.beginPath(); ctx.arc(x, y, pt.r, 0, Math.PI * 2); ctx.fill();
+          ctx.restore();
+        });
+      }
+
+      let startTime = null, running = false;
+
+      function frame(ts) {
+        if (!startTime) startTime = ts;
+        const el = ts - startTime;
+        ctx.clearRect(0, 0, W, H);
+
+        const globalA = el > PH.fadeStart ? 1 - clamp01(el, PH.fadeStart, PH.total) : 1;
+        ctx.globalAlpha = globalA;
+
+        const bulbP  = easeOut(clamp01(el, 0, PH.bulbEnd));
+        const cardP  = easeOut(clamp01(el, PH.cardStart, PH.cardEnd));
+        const fillA  = easeInOut(clamp01(el, PH.fillStart, PH.fillEnd));
+        const partP  = easeOut(clamp01(el, PH.partStart, PH.partEnd));
+
+        if (el < PH.cardStart) {
+          drawBulb(bulbP);
+        } else if (el < PH.cardStart + 280) {
+          const x = (el - PH.cardStart) / 280;
+          ctx.globalAlpha = globalA * (1 - x); drawBulb(1);
+          ctx.globalAlpha = globalA * x; drawCard(0.02, 0);
+        } else {
+          drawCard(cardP, fillA);
+        }
+
+        if (el > PH.partStart) {
+          ctx.globalAlpha = 1; drawParticles(partP);
+        }
+        ctx.globalAlpha = 1;
+
+        if (el < PH.total) {
+          requestAnimationFrame(frame);
+        } else {
+          setTimeout(() => { startTime = null; requestAnimationFrame(frame); }, 900);
+        }
+      }
+
+      const canvasObserver = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting && !running) { running = true; requestAnimationFrame(frame); }
+      }, { threshold: 0.3 });
+      canvasObserver.observe(canvas);
+    })();
   </script>
 
 </body>
