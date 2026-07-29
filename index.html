@@ -633,7 +633,7 @@
             <div class="proj-info">
               <p class="project-client">BOB2 — ERP Platform</p>
               <h3 class="project-name">AI RAG Support Assistant</h3>
-              <p class="project-desc">RAG-powered support assistant built to reduce unnecessary support tickets by giving users instant, accurate answers from the internal ERP knowledge base and wiki. Runs locally via Ollama LLM — no data leaves the business.</p>
+              <p class="project-desc">RAG-powered support assistant built to reduce unnecessary support tickets by giving users instant, accurate answers from the internal ERP knowledge base and wiki. Runs locally via Ollama LLM — no data leaves the business. Plans include a dedicated reporting assistant for instant sales and operational insight, and a warehouse optimiser to streamline picking and stock management.</p>
               <div class="project-tags">
                 <span class="tag">RAG</span>
                 <span class="tag">Ollama</span>
@@ -647,35 +647,77 @@
               </span>
             </div>
             <div class="proj-visual">
-              <svg viewBox="0 0 600 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
-                <!-- Background -->
-                <rect width="600" height="380" rx="16" fill="#111827"/>
-                <!-- Title bar -->
-                <text x="36" y="52" font-family="Inter,sans-serif" font-size="22" font-weight="700" fill="#ffffff">BOB ERP Support Assistant</text>
-                <!-- User bubble -->
-                <rect x="36" y="76" width="480" height="44" rx="10" fill="#1f2937"/>
-                <circle cx="60" cy="98" r="14" fill="#ea580c"/>
-                <text x="60" y="103" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#fff">B</text>
-                <text x="86" y="103" font-family="Inter,sans-serif" font-size="13" fill="#d1d5db">How can I import an eBay order?</text>
-                <!-- Assistant bubble background -->
-                <rect x="36" y="134" width="520" height="170" rx="10" fill="#1f2937"/>
-                <circle cx="60" cy="156" r="14" fill="#ea580c"/>
-                <text x="60" y="161" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#fff">AI</text>
-                <!-- Response text lines -->
-                <text x="86" y="158" font-family="Inter,sans-serif" font-size="12" fill="#e5e7eb">You can import an eBay order using one of two methods:</text>
-                <circle cx="95" cy="178" r="3" fill="#22c55e"/>
-                <text x="106" y="182" font-family="Inter,sans-serif" font-size="12" fill="#e5e7eb"><tspan font-weight="600">Manual Import</tspan><tspan fill="#9ca3af">: Go to Scheduled Tasks → Manual Import of eBay Orders.</tspan></text>
-                <circle cx="95" cy="200" r="3" fill="#22c55e"/>
-                <text x="106" y="204" font-family="Inter,sans-serif" font-size="12" fill="#e5e7eb"><tspan font-weight="600">Auto Import</tspan><tspan fill="#9ca3af">: Configure via eBay Global Settings → Import/Export tab.</tspan></text>
-                <!-- Source links -->
-                <text x="86" y="228" font-family="Inter,sans-serif" font-size="11" fill="#6b7280">Sources: ibridge.co.uk/help/knowledge-base/order-import</text>
-                <text x="86" y="246" font-family="Inter,sans-serif" font-size="11" fill="#22c55e">bob2.co.uk/Admin/ebayConfiguration/Configure</text>
-                <text x="86" y="262" font-family="Inter,sans-serif" font-size="11" fill="#22c55e">bob2.co.uk/Admin/ScheduleTask/List</text>
-                <!-- Input box -->
-                <rect x="36" y="318" width="490" height="44" rx="10" fill="#1f2937"/>
-                <text x="56" y="345" font-family="Inter,sans-serif" font-size="12" fill="#6b7280">Ask a question about BOB ERP...</text>
-                <rect x="542" y="322" width="36" height="36" rx="8" fill="#374151"/>
-                <text x="560" y="345" text-anchor="middle" font-family="Inter,sans-serif" font-size="16" fill="#9ca3af">↑</text>
+              <svg viewBox="0 0 1240 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+
+                <!-- LEFT PANEL: Support Assistant -->
+                <rect x="0" y="0" width="600" height="400" rx="14" fill="#111827"/>
+                <text x="24" y="28" font-family="Inter,sans-serif" font-size="10" font-weight="600" letter-spacing="1" fill="#6b7280">SUPPORT ASSISTANT</text>
+                <!-- User message -->
+                <rect x="16" y="40" width="568" height="38" rx="8" fill="#1f2937"/>
+                <circle cx="38" cy="59" r="11" fill="#ea580c"/>
+                <text x="38" y="63" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#fff">B</text>
+                <text x="58" y="63" font-family="Inter,sans-serif" font-size="11.5" fill="#d1d5db">How can I import an eBay order?</text>
+                <!-- AI response -->
+                <rect x="16" y="88" width="568" height="214" rx="8" fill="#1f2937"/>
+                <circle cx="38" cy="108" r="11" fill="#ea580c"/>
+                <text x="38" y="113" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#fff">AI</text>
+                <text x="58" y="110" font-family="Inter,sans-serif" font-size="11" fill="#e5e7eb">You can import an eBay order in two ways:</text>
+                <circle cx="66" cy="128" r="2.5" fill="#22c55e"/>
+                <text x="76" y="132" font-family="Inter,sans-serif" font-size="11" fill="#e5e7eb"><tspan font-weight="600">Manual:</tspan><tspan fill="#9ca3af"> Scheduled Tasks → Manual Import of eBay Orders.</tspan></text>
+                <circle cx="66" cy="150" r="2.5" fill="#22c55e"/>
+                <text x="76" y="154" font-family="Inter,sans-serif" font-size="11" fill="#e5e7eb"><tspan font-weight="600">Auto:</tspan><tspan fill="#9ca3af"> eBay Global Settings → Import/Export tab.</tspan></text>
+                <text x="58" y="182" font-family="Inter,sans-serif" font-size="10" fill="#6b7280">Sources:</text>
+                <text x="58" y="198" font-family="Inter,sans-serif" font-size="10" fill="#22c55e">ibridge.co.uk/help/knowledge-base/order-import</text>
+                <text x="58" y="214" font-family="Inter,sans-serif" font-size="10" fill="#22c55e">bob2.co.uk/Admin/ebayConfiguration/Configure</text>
+                <text x="58" y="230" font-family="Inter,sans-serif" font-size="10" fill="#22c55e">bob2.co.uk/Admin/ScheduleTask/List</text>
+                <!-- Input -->
+                <rect x="16" y="316" width="530" height="38" rx="8" fill="#1f2937"/>
+                <text x="34" y="339" font-family="Inter,sans-serif" font-size="11" fill="#4b5563">Ask a question about BOB ERP...</text>
+                <rect x="554" y="320" width="30" height="30" rx="6" fill="#374151"/>
+                <text x="569" y="339" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" fill="#9ca3af">↑</text>
+
+                <!-- RIGHT PANEL: Reporting Assistant -->
+                <rect x="640" y="0" width="600" height="400" rx="14" fill="#111827"/>
+                <text x="664" y="28" font-family="Inter,sans-serif" font-size="10" font-weight="600" letter-spacing="1" fill="#6b7280">REPORTING ASSISTANT</text>
+                <!-- User message -->
+                <rect x="656" y="40" width="568" height="38" rx="8" fill="#1f2937"/>
+                <circle cx="678" cy="59" r="11" fill="#ea580c"/>
+                <text x="678" y="63" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#fff">B</text>
+                <text x="698" y="63" font-family="Inter,sans-serif" font-size="11.5" fill="#d1d5db">What are my best selling products this week?</text>
+                <!-- AI response with bar chart -->
+                <rect x="656" y="88" width="568" height="250" rx="8" fill="#1f2937"/>
+                <circle cx="678" cy="108" r="11" fill="#ea580c"/>
+                <text x="678" y="113" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#fff">AI</text>
+                <text x="698" y="110" font-family="Inter,sans-serif" font-size="11" fill="#e5e7eb">Here are your top selling products this week:</text>
+                <!-- Bar chart rows -->
+                <!-- Row 1: MX5 Air Filter 142 -->
+                <text x="664" y="148" font-family="Inter,sans-serif" font-size="10" fill="#9ca3af">MX5 Air Filter</text>
+                <rect x="770" y="136" width="370" height="16" rx="3" fill="#22c55e"/>
+                <text x="1148" y="148" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#22c55e">142</text>
+                <!-- Row 2: Brake Pads MK3 98 -->
+                <text x="664" y="174" font-family="Inter,sans-serif" font-size="10" fill="#9ca3af">Brake Pads MK3</text>
+                <rect x="770" y="162" width="255" height="16" rx="3" fill="#22c55e" opacity="0.75"/>
+                <text x="1148" y="174" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#4ade80">98</text>
+                <!-- Row 3: Oil Filter Std 87 -->
+                <text x="664" y="200" font-family="Inter,sans-serif" font-size="10" fill="#9ca3af">Oil Filter Std</text>
+                <rect x="770" y="188" width="226" height="16" rx="3" fill="#22c55e" opacity="0.6"/>
+                <text x="1148" y="200" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#4ade80">87</text>
+                <!-- Row 4: HT Leads Set 64 -->
+                <text x="664" y="226" font-family="Inter,sans-serif" font-size="10" fill="#9ca3af">HT Leads Set</text>
+                <rect x="770" y="214" width="166" height="16" rx="3" fill="#22c55e" opacity="0.45"/>
+                <text x="1148" y="226" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#86efac">64</text>
+                <!-- Row 5: Clutch Kit MK1 51 -->
+                <text x="664" y="252" font-family="Inter,sans-serif" font-size="10" fill="#9ca3af">Clutch Kit MK1</text>
+                <rect x="770" y="240" width="132" height="16" rx="3" fill="#22c55e" opacity="0.35"/>
+                <text x="1148" y="252" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#86efac">51</text>
+                <!-- Chart footer -->
+                <text x="664" y="308" font-family="Inter,sans-serif" font-size="9.5" fill="#4b5563">Week of 21 Jul 2026 · units sold · powered by Ollama</text>
+                <!-- Input -->
+                <rect x="656" y="316" width="530" height="38" rx="8" fill="#1f2937"/>
+                <text x="674" y="339" font-family="Inter,sans-serif" font-size="11" fill="#4b5563">Ask about sales, stock, or trends...</text>
+                <rect x="1194" y="320" width="30" height="30" rx="6" fill="#374151"/>
+                <text x="1209" y="339" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" fill="#9ca3af">↑</text>
+
               </svg>
             </div>
           </div>
