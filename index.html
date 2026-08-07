@@ -349,7 +349,7 @@
     .tool-item:hover { background: var(--gray-100); }
 
     .tool-logo { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .tool-logo svg { width: 100%; height: 100%; }
+    .tool-logo svg, .tool-logo img { width: 100%; height: 100%; object-fit: contain; }
     .tool-name { font-size: 11px; font-weight: 500; color: var(--gray-600); }
 
     /* ── CERTIFICATIONS ── */
@@ -1096,7 +1096,7 @@
       },
       {
         name: 'Metabase',
-        svg: `<svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#509EE3"/><polyline points="7,31 7,11 20,23 33,11 33,31" stroke="white" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`
+        svg: `<img src="assets/tools/metabase.png" alt="Metabase">`
       },
       {
         name: 'SQL',
@@ -1112,11 +1112,11 @@
       },
       {
         name: 'Claude',
-        svg: `<svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#CC785C"/><path d="M20 8L20 32" stroke="white" stroke-width="3.2" stroke-linecap="round"/><path d="M8.7 14L31.3 26" stroke="white" stroke-width="3.2" stroke-linecap="round"/><path d="M8.7 26L31.3 14" stroke="white" stroke-width="3.2" stroke-linecap="round"/></svg>`
+        svg: `<img src="assets/tools/claude.png" alt="Claude">`
       },
       {
         name: 'Ollama',
-        svg: `<svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#1c1c1c"/><circle cx="15" cy="19" r="6" fill="white"/><circle cx="25" cy="19" r="6" fill="white"/><circle cx="15" cy="19" r="2.8" fill="#1c1c1c"/><circle cx="25" cy="19" r="2.8" fill="#1c1c1c"/><circle cx="16.2" cy="17.5" r="1" fill="white"/><circle cx="26.2" cy="17.5" r="1" fill="white"/><path d="M14 28 Q20 32 26 28" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/></svg>`
+        svg: `<img src="assets/tools/ollama.png" alt="Ollama">`
       },
       {
         name: 'Azure',
