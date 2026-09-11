@@ -1194,20 +1194,6 @@
       localStorage.setItem('theme', next);
     });
 
-    /* ── SKILLS TICKER ── */
-    const SKILLS = [
-      'ERP Systems', 'Business Analysis', 'AI Engineering', 'Data Analytics',
-      'Power BI', 'Python', 'SQL', 'Figma', 'UI/UX Design', 'n8n Automation',
-      'Stakeholder Management', 'Product Design', 'Agile', 'API Integration',
-      'Process Mapping', 'Digital Strategy', 'Technical Consulting', 'RAG / LLMs',
-      'E-Commerce', 'Cloud Infrastructure', 'Project Management', 'Docker', 'GitHub'
-    ];
-    const tickerTrack = document.getElementById('tickerTrack');
-    const items = [...SKILLS, ...SKILLS].map(s =>
-      `<span class="ticker-item"><span class="ticker-dot"></span>${s}</span>`
-    ).join('');
-    tickerTrack.innerHTML = items;
-
     /* ── HERO SCROLL + CURSOR PARALLAX ── */
     const heroPhotoWrap = document.getElementById('heroPhotoWrap');
     const heroImg       = document.getElementById('heroImg');
