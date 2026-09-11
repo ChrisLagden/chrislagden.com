@@ -485,9 +485,10 @@
     /* ── SECTION NAV DOTS ── */
     .section-dots {
       position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
-      z-index: 90; display: flex; flex-direction: column; gap: 10px;
+      z-index: 90; display: none; flex-direction: column; gap: 10px;
       align-items: center;
     }
+    @media (min-width: 1024px) { .section-dots { display: flex; } }
     .section-dot {
       width: 8px; height: 8px; border-radius: 50%;
       border: 1.5px solid var(--gray-400);
@@ -1171,7 +1172,7 @@
   </section>
 
   <!-- SECTION DOTS -->
-  <nav class="section-dots" id="sectionDots" aria-label="Page sections"></nav>
+  <div class="section-dots" id="sectionDots" aria-label="Page sections"></div>
 
   <!-- FOOTER -->
   <footer>
