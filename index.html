@@ -94,17 +94,44 @@
 
     /* Theme toggle */
     .theme-toggle {
-      width: 36px; height: 20px; border-radius: 10px;
-      background: var(--gray-200); border: none; cursor: pointer;
-      position: relative; transition: background 0.3s; flex-shrink: 0;
-      padding: 0;
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--gray-100); border: 1px solid var(--gray-200);
+      border-radius: 20px; padding: 4px 8px; cursor: pointer;
+      transition: background 0.2s, border-color 0.2s; flex-shrink: 0;
     }
-    .theme-toggle::after {
-      content: ''; position: absolute; top: 3px; left: 3px;
-      width: 14px; height: 14px; border-radius: 50%;
-      background: var(--green); transition: transform 0.3s;
+    .theme-toggle svg { width: 14px; height: 14px; flex-shrink: 0; transition: opacity 0.2s, color 0.2s; }
+    .theme-toggle .icon-moon { color: var(--green); opacity: 1; }
+    .theme-toggle .icon-sun  { color: var(--gray-400); opacity: 0.4; }
+    [data-theme="light"] .theme-toggle .icon-moon { color: var(--gray-400); opacity: 0.4; }
+    [data-theme="light"] .theme-toggle .icon-sun  { color: #f59e0b; opacity: 1; }
+
+    /* Nav logo entrance */
+    .nav-logo { overflow: hidden; }
+    .nav-logo-name {
+      display: inline-block;
+      transform: translateX(-8px); opacity: 0;
+      animation: nameSlideIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
     }
-    [data-theme="light"] .theme-toggle::after { transform: translateX(16px); }
+    @keyframes nameSlideIn {
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* Hero text entrance */
+    .hero-line {
+      display: block; overflow: hidden;
+    }
+    .hero-line-inner {
+      display: block;
+      transform: translateY(110%);
+      animation: lineReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .hero-line:nth-child(1) .hero-line-inner { animation-delay: 0.05s; }
+    .hero-line:nth-child(2) .hero-line-inner { animation-delay: 0.18s; }
+    .hero-sub    { opacity: 0; transform: translateY(12px); animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.45s forwards; }
+    .hero-actions { opacity: 0; transform: translateY(12px); animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.58s forwards; }
+    .hero-photo-wrap { opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.2s forwards; }
+    @keyframes lineReveal { to { transform: translateY(0); } }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
     /* ── SKILLS TICKER ── */
     .skills-ticker {
@@ -574,7 +601,7 @@
     <div class="nav-inner">
       <a href="#" class="nav-logo">
         <span class="nav-cl-box"><em>CL</em></span>
-        Christian James Lagden
+        <span class="nav-logo-name">Christian James Lagden</span>
       </a>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
@@ -589,7 +616,14 @@
           </a>
         </li>
         <li><a href="#contact" class="nav-cta">Get in touch</a></li>
-        <li><button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"></button></li>
+        <li>
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <!-- moon -->
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <!-- sun -->
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </button>
+        </li>
       </ul>
     </div>
   </nav>
@@ -599,7 +633,8 @@
     <div class="hero-inner">
       <div class="hero-content">
         <h1 class="hero-h1">
-          Technical <strong>consulting</strong><br>and <strong>analysis.</strong>
+          <span class="hero-line"><span class="hero-line-inner">Technical <strong>consulting</strong></span></span>
+          <span class="hero-line"><span class="hero-line-inner">and <strong>analysis.</strong></span></span>
         </h1>
         <p class="hero-sub">
           ERP systems, business &amp; data analysis, AI Engineering, and digital product design —
