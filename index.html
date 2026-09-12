@@ -1296,14 +1296,7 @@
       });
     });
 
-    /* ── STAGGERED SECTION REVEALS ── */
-    const revealEls = document.querySelectorAll('[data-reveal]');
-    const ioReveal = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); ioReveal.unobserve(e.target); } });
-    }, { threshold: 0.12 });
-    revealEls.forEach(el => ioReveal.observe(el));
-
-    /* ── STAT COUNTERS ── */
+    /* ── STAGGERED SECTION REVEALS + STAT COUNTERS ── */
     function animateCount(el, target, suffix) {
       const dur = 1400, start = performance.now();
       function step(now) {
@@ -1314,15 +1307,20 @@
       }
       requestAnimationFrame(step);
     }
-    const ioStats = new IntersectionObserver((entries) => {
+    const revealEls = document.querySelectorAll('[data-reveal]');
+    const ioReveal = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (!e.isIntersecting) return;
-        const el = e.target.querySelector('[data-count]');
-        if (el) animateCount(el, +el.dataset.count, el.dataset.suffix);
-        ioStats.unobserve(e.target);
+        e.target.classList.add('revealed');
+        const countEl = e.target.querySelector('[data-count]');
+        if (countEl) {
+          const delay = (parseFloat(e.target.style.transitionDelay) || 0) * 1000;
+          setTimeout(() => animateCount(countEl, +countEl.dataset.count, countEl.dataset.suffix || ''), delay + 80);
+        }
+        ioReveal.unobserve(e.target);
       });
-    }, { threshold: 0.5 });
-    document.querySelectorAll('.stat[data-reveal]').forEach(s => ioStats.observe(s));
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => ioReveal.observe(el));
 
     /* ── THEME TOGGLE ── */
     const html = document.documentElement;
@@ -1649,6 +1647,14 @@
       canvas.width = W; canvas.height = H;
       const CX = W / 2, CY = H / 2;
       const GREEN = '#22c55e', GREEN_LIGHT = '#dcfce7';
+      function getC() {
+        const dark = document.documentElement.getAttribute('data-theme') !== 'light';
+        return {
+          stroke: dark ? 'rgba(240,240,240,0.85)' : '#111',
+          fill: dark ? '#1e2024' : '#ffffff',
+          text: dark ? 'rgba(240,240,240,0.7)' : 'rgba(0,0,0,0.7)'
+        };
+      }
 
       // Pre-computed so they don't change per frame
       const LINE_WIDTHS = [0.88, 0.65, 0.75, 0.55];
@@ -1676,8 +1682,9 @@
       const PH = { bulbEnd: 1400, cardStart: 1200, cardEnd: 3000, fillStart: 2700, fillEnd: 3900, partStart: 3700, partEnd: 5100, fadeStart: 4900, total: 5400 };
 
       function drawBulb(p) {
+        const c = getC();
         ctx.save();
-        ctx.strokeStyle = '#000'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.setLineDash([5, 5]);
+        ctx.strokeStyle = c.stroke; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.setLineDash([5, 5]);
         ctx.beginPath();
         ctx.arc(CX, CY - 10, 36, Math.PI * 0.45, Math.PI * 0.45 + Math.PI * 1.7 * p);
         ctx.stroke();
@@ -1698,15 +1705,16 @@
       }
 
       function drawCard(drawP, fillA) {
+        const c = getC();
         const cw = 200, ch = 150, cx0 = CX - 100, cy0 = CY - 82;
         ctx.save();
         // Shadow
         if (fillA > 0) { ctx.shadowColor = `rgba(0,0,0,${fillA * 0.14})`; ctx.shadowBlur = 18 * fillA; ctx.shadowOffsetY = 5 * fillA; }
         // Fill
-        if (fillA > 0) { ctx.fillStyle = '#fff'; ctx.globalAlpha = fillA; rr(cx0, cy0, cw, ch, 10); ctx.fill(); ctx.globalAlpha = 1; }
+        if (fillA > 0) { ctx.fillStyle = c.fill; ctx.globalAlpha = fillA; rr(cx0, cy0, cw, ch, 10); ctx.fill(); ctx.globalAlpha = 1; }
         ctx.shadowColor = 'transparent'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
         // Border
-        ctx.strokeStyle = fillA > 0.5 ? `rgba(0,0,0,0.08)` : '#000'; ctx.lineWidth = 1.5; ctx.setLineDash([]);
+        ctx.strokeStyle = fillA > 0.5 ? `rgba(128,128,128,0.3)` : c.stroke; ctx.lineWidth = 1.5; ctx.setLineDash([]);
         if (drawP >= 1) { rr(cx0, cy0, cw, ch, 10); ctx.stroke(); }
         else {
           const perim = 2 * (cw + ch), drawn = perim * drawP;
@@ -1720,18 +1728,18 @@
         if (drawP > 0.3) {
           const ua = Math.min(1, (drawP - 0.3) / 0.4) * (0.25 + fillA * 0.75);
           // Header bg
-          if (fillA > 0) { ctx.globalAlpha = fillA * 0.05; ctx.fillStyle = '#000'; rr(cx0 + 10, cy0 + 10, cw - 20, 28, 5); ctx.fill(); ctx.globalAlpha = 1; }
+          if (fillA > 0) { ctx.globalAlpha = fillA * 0.08; ctx.fillStyle = c.stroke; rr(cx0 + 10, cy0 + 10, cw - 20, 28, 5); ctx.fill(); ctx.globalAlpha = 1; }
           // Green brand dot
           ctx.globalAlpha = ua; ctx.fillStyle = GREEN;
           ctx.beginPath(); ctx.arc(cx0 + 24, cy0 + 24, 7, 0, Math.PI * 2); ctx.fill();
           // Title lines
-          ctx.fillStyle = '#000'; ctx.globalAlpha = ua * 0.7; rr(cx0 + 40, cy0 + 18, 68, 6, 3); ctx.fill();
+          ctx.fillStyle = c.stroke; ctx.globalAlpha = ua * 0.7; rr(cx0 + 40, cy0 + 18, 68, 6, 3); ctx.fill();
           ctx.globalAlpha = ua * 0.4; rr(cx0 + 40, cy0 + 28, 44, 4, 2); ctx.fill();
           ctx.globalAlpha = 1;
         }
         if (drawP > 0.6) {
           const ca = Math.min(1, (drawP - 0.6) / 0.4) * (0.15 + fillA * 0.65);
-          ctx.globalAlpha = ca * 0.55; ctx.fillStyle = '#000';
+          ctx.globalAlpha = ca * 0.55; ctx.fillStyle = c.stroke;
           LINE_WIDTHS.forEach((w, i) => { rr(cx0 + 16, cy0 + 50 + i * 14, (cw - 32) * w, 5, 2.5); ctx.fill(); });
           // Button
           if (fillA > 0.25) {
