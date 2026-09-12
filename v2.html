@@ -13,6 +13,39 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* ── PAGE LOAD FADE ── */
+    body { opacity: 0; transition: opacity 0.35s ease; }
+    body.loaded { opacity: 1; }
+
+    /* ── SCROLL PROGRESS ── */
+    .scroll-progress {
+      position: fixed; top: 0; left: 0; width: 0%; height: 2px;
+      background: var(--green); z-index: 200;
+      box-shadow: 0 0 8px rgba(34,197,94,0.5);
+      transition: width 0.08s linear;
+      pointer-events: none;
+    }
+
+    /* ── CUSTOM CURSOR ── */
+    .cursor-dot {
+      position: fixed; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green); pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%) scale(1);
+      transition: transform 0.15s, opacity 0.2s;
+      opacity: 0;
+    }
+    .cursor-dot.visible { opacity: 1; }
+    .cursor-dot.expanded { transform: translate(-50%, -50%) scale(2.5); opacity: 0.5; }
+    @media (hover: none) { .cursor-dot { display: none; } }
+
+    /* ── REVEAL ANIMATIONS ── */
+    [data-reveal] {
+      opacity: 0; transform: translateY(22px);
+      transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    [data-reveal].revealed { opacity: 1; transform: translateY(0); }
+
     :root {
       --black: #0a0a0a;
       --white: #111214;
@@ -598,6 +631,8 @@
   </style>
 </head>
 <body>
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
 
   <!-- NAV -->
   <nav>
@@ -644,11 +679,11 @@
           I help businesses build better software and streamline their operations.
         </p>
         <div class="hero-actions">
-          <a href="#work" class="btn-primary">
+          <a href="#work" class="btn-primary magnetic">
             View my work
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <a href="#contact" class="btn-secondary">Get in touch</a>
+          <a href="#contact" class="btn-secondary magnetic">Get in touch</a>
         </div>
       </div>
 
@@ -670,11 +705,11 @@
           <strong>business and technology.</strong>
         </h2>
         <div class="about-stats">
-          <div class="stat"><div class="stat-num">6+</div><div class="stat-label">Years in technical consulting</div></div>
-          <div class="stat"><div class="stat-num">100K+</div><div class="stat-label">Supported annual sales via ERP</div></div>
-          <div class="stat"><div class="stat-num">4</div><div class="stat-label">Industry leading ecommerce clients</div></div>
-          <div class="stat"><div class="stat-num">Expert</div><div class="stat-label">Computer Science & Masters Degree</div></div>
-          <div class="stat stat--full"><div class="stat-num">Certified Professional BA</div><div class="stat-label">Agile Business Analysis — BCS</div></div>
+          <div class="stat" data-reveal style="transition-delay:0.05s"><div class="stat-num" data-count="6" data-suffix="+">6+</div><div class="stat-label">Years in technical consulting</div></div>
+          <div class="stat" data-reveal style="transition-delay:0.12s"><div class="stat-num" data-count="100" data-suffix="K+">100K+</div><div class="stat-label">Supported annual sales via ERP</div></div>
+          <div class="stat" data-reveal style="transition-delay:0.19s"><div class="stat-num" data-count="4" data-suffix="">4</div><div class="stat-label">Industry leading ecommerce clients</div></div>
+          <div class="stat" data-reveal style="transition-delay:0.26s"><div class="stat-num">Expert</div><div class="stat-label">Computer Science & Masters Degree</div></div>
+          <div class="stat stat--full" data-reveal style="transition-delay:0.33s"><div class="stat-num">Certified Professional BA</div><div class="stat-label">Agile Business Analysis — BCS</div></div>
         </div>
       </div>
       <div class="about-body">
@@ -725,10 +760,10 @@
                 <span class="tag">Wireframing</span>
                 <span class="tag">Stakeholder Engagement</span>
               </div>
-              <span class="project-link">
-                Case study coming soon
+              <a href="projects/erp.html" class="project-link">
+                View case study
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
+              </a>
             </div>
             <div class="proj-visual">
               <img src="assets/bob2-1080.png" alt="BOB2 ERP Dashboard" />
@@ -1221,6 +1256,74 @@
   </footer>
 
   <script>
+    /* ── PAGE LOAD ── */
+    window.addEventListener('load', () => document.body.classList.add('loaded'));
+
+    /* ── SCROLL PROGRESS BAR ── */
+    const scrollProgress = document.getElementById('scrollProgress');
+    lenis.on('scroll', ({ scroll }) => {
+      const max = document.body.scrollHeight - window.innerHeight;
+      scrollProgress.style.width = (scroll / max * 100) + '%';
+    });
+
+    /* ── CUSTOM CURSOR ── */
+    const cursorDot = document.getElementById('cursorDot');
+    let cx = -100, cy = -100, tx = -100, ty = -100;
+    document.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; cursorDot.classList.add('visible'); });
+    document.addEventListener('mouseleave', () => cursorDot.classList.remove('visible'));
+    document.querySelectorAll('a, button, .magnetic').forEach(el => {
+      el.addEventListener('mouseenter', () => cursorDot.classList.add('expanded'));
+      el.addEventListener('mouseleave', () => cursorDot.classList.remove('expanded'));
+    });
+    (function animateCursor() {
+      cx += (tx - cx) * 0.12; cy += (ty - cy) * 0.12;
+      cursorDot.style.left = cx + 'px'; cursorDot.style.top = cy + 'px';
+      requestAnimationFrame(animateCursor);
+    })();
+
+    /* ── MAGNETIC BUTTONS ── */
+    document.querySelectorAll('.magnetic').forEach(el => {
+      el.addEventListener('mousemove', e => {
+        const r = el.getBoundingClientRect();
+        const dx = e.clientX - (r.left + r.width / 2);
+        const dy = e.clientY - (r.top + r.height / 2);
+        el.style.transform = `translate(${dx * 0.25}px, ${dy * 0.3}px)`;
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.transition = 'transform 0.4s cubic-bezier(0.22,1,0.36,1)';
+        el.style.transform = '';
+        setTimeout(() => el.style.transition = '', 400);
+      });
+    });
+
+    /* ── STAGGERED SECTION REVEALS ── */
+    const revealEls = document.querySelectorAll('[data-reveal]');
+    const ioReveal = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); ioReveal.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => ioReveal.observe(el));
+
+    /* ── STAT COUNTERS ── */
+    function animateCount(el, target, suffix) {
+      const dur = 1400, start = performance.now();
+      function step(now) {
+        const p = Math.min((now - start) / dur, 1);
+        const ease = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(ease * target) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    const ioStats = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target.querySelector('[data-count]');
+        if (el) animateCount(el, +el.dataset.count, el.dataset.suffix);
+        ioStats.unobserve(e.target);
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.stat[data-reveal]').forEach(s => ioStats.observe(s));
+
     /* ── THEME TOGGLE ── */
     const html = document.documentElement;
     const themeToggle = document.getElementById('themeToggle');
