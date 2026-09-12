@@ -1321,12 +1321,13 @@
     /* ── THEME TOGGLE ── */
     const html = document.documentElement;
     const themeToggle = document.getElementById('themeToggle');
-    const saved = localStorage.getItem('theme') || 'dark';
+    let saved = 'dark';
+    try { saved = localStorage.getItem('theme') || 'dark'; } catch(e) {}
     html.setAttribute('data-theme', saved);
     themeToggle.addEventListener('click', () => {
       const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       html.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
+      try { localStorage.setItem('theme', next); } catch(e) {}
     });
 
     /* ── HERO SCROLL + CURSOR PARALLAX ── */
