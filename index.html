@@ -1261,10 +1261,6 @@
 
     /* ── SCROLL PROGRESS BAR ── */
     const scrollProgress = document.getElementById('scrollProgress');
-    lenis.on('scroll', ({ scroll }) => {
-      const max = document.body.scrollHeight - window.innerHeight;
-      scrollProgress.style.width = (scroll / max * 100) + '%';
-    });
 
     /* ── CUSTOM CURSOR ── */
     const cursorDot = document.getElementById('cursorDot');
@@ -1359,6 +1355,10 @@
 
     /* ── LENIS SMOOTH SCROLL ── */
     const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
+    lenis.on('scroll', ({ scroll }) => {
+      const max = document.body.scrollHeight - window.innerHeight;
+      scrollProgress.style.width = (scroll / max * 100) + '%';
+    });
     lenis.on('scroll', ({ scroll }) => { curScrollY = scroll; scheduleRAF(); });
     function lenisRaf(time) { lenis.raf(time); requestAnimationFrame(lenisRaf); }
     requestAnimationFrame(lenisRaf);
