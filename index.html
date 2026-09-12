@@ -81,6 +81,7 @@
     .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
     .nav-links a { font-size: 14px; color: var(--gray-600); transition: color 0.15s, text-decoration-color 0.2s; text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 3px; text-decoration-thickness: 2px; }
     .nav-links a:not(.nav-cta):not(.nav-linkedin):hover { color: var(--text); text-decoration-color: var(--green); }
+    .nav-links a.nav-active { color: var(--text); text-decoration-color: var(--green); }
 
     .nav-linkedin { display: flex; align-items: center; color: var(--gray-600); transition: color 0.2s; }
     .nav-linkedin:hover { color: #0077b5; }
@@ -1510,12 +1511,19 @@
     });
 
     const dotEls = dotsNav.querySelectorAll('.section-dot');
+    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]:not(.nav-cta)');
+
+    function setActiveSection(id) {
+      dotEls.forEach((d, i) => d.classList.toggle('active', DOT_SECTIONS[i].id === id));
+      navLinks.forEach(a => {
+        const matches = a.getAttribute('href') === '#' + id;
+        a.classList.toggle('nav-active', matches);
+      });
+    }
+
     const ioDots = new IntersectionObserver((entries) => {
       entries.forEach(e => {
-        if (e.isIntersecting) {
-          const idx = DOT_SECTIONS.findIndex(s => s.id === e.target.id);
-          dotEls.forEach((d, i) => d.classList.toggle('active', i === idx));
-        }
+        if (e.isIntersecting) setActiveSection(e.target.id);
       });
     }, { threshold: 0.4 });
     DOT_SECTIONS.forEach(({ id }) => {
