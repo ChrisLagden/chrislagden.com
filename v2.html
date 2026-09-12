@@ -129,7 +129,8 @@
     .hero-line:nth-child(2) .hero-line-inner { animation-delay: 0.18s; }
     .hero-sub    { opacity: 0; transform: translateY(12px); animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.45s forwards; }
     .hero-actions { opacity: 0; transform: translateY(12px); animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.58s forwards; }
-    .hero-photo-wrap { opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.2s forwards; }
+    .hero-photo-wrap { opacity: 0; animation: heroImgFade 0.9s cubic-bezier(0.22,1,0.36,1) 0.2s forwards; }
+    @keyframes heroImgFade { to { opacity: 1; } }
     @keyframes lineReveal { to { transform: translateY(0); } }
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
