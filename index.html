@@ -411,11 +411,12 @@
     .proj-visual {
       height: 340px; overflow: hidden; position: relative; background: var(--gray-100); flex-shrink: 0; background: var(--surface);
     }
-    .proj-visual img {
+    .proj-visual img, .proj-visual video {
       width: 100%; height: 100%; object-fit: cover; object-position: top left;
       filter: grayscale(100%); transition: filter 0.4s ease;
     }
-    .proj-card:hover .proj-visual img { filter: grayscale(30%); }
+    .proj-card:hover .proj-visual img,
+    .proj-card:hover .proj-visual video { filter: grayscale(30%); }
 
     .proj-visual-placeholder {
       width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
@@ -766,7 +767,7 @@
               </a>
             </div>
             <div class="proj-visual">
-              <img src="assets/bob2-1080.png" alt="BOB2 ERP Dashboard" />
+              <video src="assets/bob2-promo.mp4" muted playsinline loop preload="none" id="erpPromoVideo"></video>
             </div>
           </div>
 
@@ -1810,6 +1811,36 @@
         if (entries[0].isIntersecting && !running) { running = true; requestAnimationFrame(frame); }
       }, { threshold: 0.3 });
       canvasObserver.observe(canvas);
+    })();
+
+    /* ── ERP PROMO VIDEO: play on carousel slide 0, pause otherwise ── */
+    (function () {
+      const vid = document.getElementById('erpPromoVideo');
+      if (!vid) return;
+      const ERP_IDX = 0;
+
+      function syncVideo() {
+        if (projIdx === ERP_IDX) { vid.play().catch(() => {}); }
+        else { vid.pause(); }
+      }
+
+      // Hook into carousel navigation
+      const _orig = goToProject;
+      goToProject = function(idx, restart) {
+        _orig(idx, restart);
+        syncVideo();
+      };
+
+      // Also play/pause when work section enters/leaves viewport
+      const workSection = document.getElementById('work');
+      if (workSection) {
+        new IntersectionObserver(entries => {
+          if (!entries[0].isIntersecting) vid.pause();
+          else if (projIdx === ERP_IDX) vid.play().catch(() => {});
+        }, { threshold: 0.1 }).observe(workSection);
+      }
+
+      syncVideo();
     })();
   </script>
 
