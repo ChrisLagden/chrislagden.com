@@ -1,13 +1,4 @@
-node_modules/
-roman-civ/
-garme/
-npc-or-not/
-search-visibility/
-vegolution/
-finstack/
-blog/
-_layouts/
-_posts/
-*.log
 .git/
 .claude/
+.wrangler/
+node_modules/
