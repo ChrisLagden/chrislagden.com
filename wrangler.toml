@@ -1,10 +1,5 @@
 name = "chrislagden-com"
 compatibility_date = "2024-09-23"
 
-routes = [
-  { pattern = "chrislagden.com", custom_domain = true },
-  { pattern = "www.chrislagden.com", custom_domain = true }
-]
-
 [assets]
 directory = "."
